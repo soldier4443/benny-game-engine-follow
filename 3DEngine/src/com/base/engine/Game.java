@@ -21,6 +21,8 @@ public class Game {
 		shader.addVertexShader(ResourceLoader.loadShader("basicVertex.glsl"));
 		shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.glsl"));
 		shader.compileShader();
+		
+		shader.addUniform("uniformFloat");
 	}
 	
 	// This is test
@@ -38,8 +40,12 @@ public class Game {
 		}
 	}
 	
+	float temp = 0.0f;
+	
 	public void update() {
+		temp += Time.getDelta();
 		
+		shader.setUniformf("uniformFloat", (float)Math.abs(Math.sin(temp)));
 	}
 	
 	public void render() {
