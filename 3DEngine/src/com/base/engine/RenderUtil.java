@@ -13,7 +13,7 @@ public class RenderUtil {
 	 * Initialize OpenGL
 	 */
 	public static void initGraphics() {
-		glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		
 		// front face : CLOCKWISE ORDER
 		glFrontFace(GL_CW);
