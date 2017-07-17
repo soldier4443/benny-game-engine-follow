@@ -1,14 +1,20 @@
 package com.base.engine;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
 
 public class Util {
 	// This method do nothing now, but later we can easily change source with this method!
-	public static FloatBuffer createFloatBuffer(int size) {
-		return BufferUtils.createFloatBuffer(size);
-	}
+    public static FloatBuffer createFloatBuffer(int size) {
+        return BufferUtils.createFloatBuffer(size);
+    }
+    
+    public static IntBuffer createIntBuffer(int size) {
+        return BufferUtils.createIntBuffer(size);
+    }
 	
 	public static FloatBuffer createFlippedBuffer(Vertex[] vertices) {
 		FloatBuffer buffer = createFloatBuffer(vertices.length * Vertex.SIZE);
@@ -35,4 +41,13 @@ public class Util {
 		
 		return buffer;
 	}
+	
+	public static IntBuffer createFlippedBuffer(int... values) {
+        IntBuffer buffer = createIntBuffer(values.length);
+        
+        buffer.put(values);
+        buffer.flip();
+        
+        return buffer;
+    }
 }
