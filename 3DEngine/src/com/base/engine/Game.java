@@ -9,7 +9,7 @@ public class Game {
 	
 	public Game() {
 //		mesh = new Mesh();
-        mesh = ResourceLoader.loadMesh("strange_cube.obj");
+        mesh = ResourceLoader.loadMesh("box.obj");
 		shader = new Shader();
 		
 //		Vertex[] vertices = new Vertex[] {
@@ -60,8 +60,8 @@ public class Game {
 		float sinTemp = (float) Math.sin(temp);
 
 		transform.setTranslation(0, 0, 0);
-		transform.setRotation(0, sinTemp * 180, 0);
-//		transform.setScale(sinTemp, sinTemp, sinTemp);
+		transform.setRotation(0, sinTemp * 180, sinTemp * 180);
+		transform.setScale(0.7f * sinTemp, 0.7f * sinTemp, 0.7f * sinTemp);
 	}
 	
 	public void render() {

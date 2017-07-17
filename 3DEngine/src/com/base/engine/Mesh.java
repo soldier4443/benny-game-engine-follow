@@ -34,7 +34,7 @@ public class Mesh {
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
 		
 //		glDrawArrays(GL_TRIANGLES, 0, size);
-        glDrawElements(GL_TRIANGLE_FAN, size, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 		
 		glDisableVertexAttribArray(0);
 	}
