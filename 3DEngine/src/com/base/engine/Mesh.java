@@ -29,13 +29,16 @@ public class Mesh {
 	
 	public void draw() {
 		glEnableVertexAttribArray(0);
-		
+		glEnableVertexAttribArray(1);
+
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
-		
+		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12); // offset : 4 * 3
+
 //		glDrawArrays(GL_TRIANGLES, 0, size);
         glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 		
 		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
 	}
 }
