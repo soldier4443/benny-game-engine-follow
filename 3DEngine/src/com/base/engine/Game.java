@@ -8,24 +8,25 @@ public class Game {
 	private Transform transform;
 	
 	public Game() {
-		mesh = new Mesh();
+//		mesh = new Mesh();
+        mesh = ResourceLoader.loadMesh("strange_cube.obj");
 		shader = new Shader();
 		
-		Vertex[] vertices = new Vertex[] {
-				new Vertex(new Vector3f(-1, -1, 0)),
-				new Vertex(new Vector3f(0, 1, 0)),
-				new Vertex(new Vector3f(1, -1, 0)),
-                new Vertex(new Vector3f(0, -1, 1))
-		};
-		
-		int[] indices = new int[]{
-		    0, 1, 3,
-            3, 1, 2,
-            2, 1, 0,
-            0, 2, 3
-        };
-		
-		mesh.addVertices(vertices, indices);
+//		Vertex[] vertices = new Vertex[] {
+//				new Vertex(new Vector3f(-1, -1, 0)),
+//				new Vertex(new Vector3f(0, 1, 0)),
+//				new Vertex(new Vector3f(1, -1, 0)),
+//                new Vertex(new Vector3f(0, -1, 1))
+//		};
+//
+//		int[] indices = new int[]{
+//		    0, 1, 3,
+//            3, 1, 2,
+//            2, 1, 0,
+//            0, 2, 3
+//        };
+//
+//		mesh.addVertices(vertices, indices);
 		
 		transform = new Transform();
 		
@@ -58,9 +59,9 @@ public class Game {
 		
 		float sinTemp = (float) Math.sin(temp);
 
-		transform.setTranslation(sinTemp, 0, 0);
-		transform.setRotation(0, sinTemp * 360, sinTemp * 360);
-		transform.setScale(sinTemp, sinTemp, sinTemp);
+		transform.setTranslation(0, 0, 0);
+		transform.setRotation(0, sinTemp * 180, 0);
+//		transform.setScale(sinTemp, sinTemp, sinTemp);
 	}
 	
 	public void render() {

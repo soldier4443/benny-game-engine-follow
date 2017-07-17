@@ -50,4 +50,23 @@ public class Util {
         
         return buffer;
     }
+	
+	public static String[] removeEmptyStrings(String[] data) {
+		ArrayList<String> result = new ArrayList<>();
+		
+		for (int i = 0; i < data.length; i++)
+			if (!data[i].equals(""))
+				result.add(data[i]);
+		
+		return result.toArray(new String[0]);
+	}
+	
+	public static int[] toIntArray(Integer[] indexData) {
+		int[] result = new int[indexData.length];
+		
+		for (int i = 0; i < result.length; i++)
+			result[i] = indexData[i];
+		
+		return result;
+	}
 }
