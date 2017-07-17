@@ -6,11 +6,13 @@ public class Game {
 	private Mesh mesh;
 	private Shader shader;
 	private Transform transform;
+	private Camera camera;
 	
 	public Game() {
 //		mesh = new Mesh();
         mesh = ResourceLoader.loadMesh("box.obj");
 		shader = new Shader();
+		camera = new Camera();
 		
 //		Vertex[] vertices = new Vertex[] {
 //				new Vertex(new Vector3f(-1, -1, 0)),
@@ -30,6 +32,7 @@ public class Game {
 		
 		transform = new Transform();
 		transform.setProjection(70.0f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
+		transform.setCamera(camera);
 		
 		shader.addVertexShader(ResourceLoader.loadShader("basicVertex.glsl"));
 		shader.addFragmentShader(ResourceLoader.loadShader("basicFragment.glsl"));
@@ -40,17 +43,19 @@ public class Game {
 	
 	// This is test
 	public void input() {
-		if (Input.getKeyDown(Input.KEY_UP)) {
-			System.out.println("We're just pressed up!");
-		} else if (Input.getKeyUp(Input.KEY_UP)) {
-			System.out.println("We're just released up!");
-		}
-		
-		if (Input.getMouseDown(1)) {
-			System.out.println("We're just right clicked at " + Input.getMousePosition());
-		} else if (Input.getMouseUp(1)) {
-			System.out.println("We're just released right moues button!");
-		}
+	    camera.input();
+	    
+//		if (Input.getKeyDown(Input.KEY_UP)) {
+//			System.out.println("We're just pressed up!");
+//		} else if (Input.getKeyUp(Input.KEY_UP)) {
+//			System.out.println("We're just released up!");
+//		}
+//
+//		if (Input.getMouseDown(1)) {
+//			System.out.println("We're just right clicked at " + Input.getMousePosition());
+//		} else if (Input.getMouseUp(1)) {
+//			System.out.println("We're just released right moues button!");
+//		}
 	}
 	
 	float temp = 0.0f;

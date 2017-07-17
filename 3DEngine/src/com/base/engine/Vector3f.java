@@ -1,6 +1,11 @@
 package com.base.engine;
 
 public class Vector3f {
+    public static final Vector3f ZERO = new Vector3f(0, 0, 0);
+    public static final Vector3f X = new Vector3f(1, 0, 0);
+	public static final Vector3f Y = new Vector3f(0, 1, 0);
+	public static final Vector3f Z = new Vector3f(0, 0, 1);
+	
 	private float x;
 	private float y;
 	private float z;
@@ -36,9 +41,28 @@ public class Vector3f {
 		
 		return this;
 	}
-	
-	public Vector3f rotate() {
-		return null;
+ 
+	// rotate around the axis
+	public Vector3f rotate(float angle, Vector3f axis) {
+        // Give sin(y) rot -> imaginary part (x, y, z)
+        // Give cos(x) rot -> realistic part
+	    
+	    float sinHalfAngle = (float) Math.sin(Math.toRadians(angle / 2));
+	    float cosHalfAngle = (float) Math.cos(Math.toRadians(angle / 2));
+	    
+	    float rX = axis.getX() * sinHalfAngle;
+	    float rY = axis.getY() * sinHalfAngle;
+	    float rZ = axis.getZ() * sinHalfAngle;
+	    float rW = cosHalfAngle;
+	    
+	    Quaternion rotation = new Quaternion(rX, rY, rZ, rW);
+	    Quaternion w = rotation.mul(this).mul( rotation.conjugate() );
+	    
+	    setX(w.getX());
+	    setY(w.getY());
+	    setZ(w.getZ());
+	    
+	    return this;
 	}
 	
 	public Vector3f add(Vector3f r) {
@@ -96,4 +120,8 @@ public class Vector3f {
 	public void setZ(float z) {
 		this.z = z;
 	}
+    
+    public Vector3f negate() {
+	    return new Vector3f(-x, -y, -z);
+    }
 }
