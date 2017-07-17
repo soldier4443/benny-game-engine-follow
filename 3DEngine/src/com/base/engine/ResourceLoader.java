@@ -62,8 +62,15 @@ public class ResourceLoader {
 						Float.valueOf(tokens[3]))));
 				} else if(tokens[0].equals("f")) {
 					// Faces
-					for (int i = 0; i < 3; i++)
-						indices.add(Integer.parseInt(tokens[i + 1]) - 1);   // -1 for different index system..
+                    indices.add(Integer.parseInt(tokens[1].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[2].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[3].split("/")[0]) - 1);
+                    
+                    if (tokens.length > 4) {
+                        indices.add(Integer.parseInt(tokens[1].split("/")[0]) - 1);
+                        indices.add(Integer.parseInt(tokens[3].split("/")[0]) - 1);
+                        indices.add(Integer.parseInt(tokens[4].split("/")[0]) - 1);
+                    }
 				}
 			}
 			
