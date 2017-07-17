@@ -64,6 +64,20 @@ public class Matrix4f {
 		return this;
 	}
 	
+	public Matrix4f initProjection(float fov, float width, float height, float zNear, float zFar) {
+	    float ar = width / height;  // aspect ratio
+		float tanHalfFOV = (float) Math.tan(Math.toRadians(fov / 2));   // calculate distance between the center and the side
+        
+        float zRange = zNear - zFar;
+		
+		m[0][0] = 1.0f / (tanHalfFOV * ar); m[0][1] = 0;                   m[0][2] = 0;                          m[0][3] = 0;
+		m[1][0] = 0;                        m[1][1] = 1.0f / tanHalfFOV;   m[1][2] = 0;                          m[1][3] = 0;
+		m[2][0] = 0;                        m[2][1] = 0;                   m[2][2] = (-zNear - zFar) / zRange;   m[2][3] = 2 * zNear * zFar / zRange;
+		m[3][0] = 0;                        m[3][1] = 0;                   m[3][2] = 1;                          m[3][3] = 0;   // Keep z component this way.. It's weird!
+		
+		return this;
+	}
+	
 	public Matrix4f mul(Matrix4f r) {
 		Matrix4f rt = new Matrix4f();
 		
