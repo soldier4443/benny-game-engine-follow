@@ -5,15 +5,16 @@ import org.lwjgl.input.Keyboard;
 public class Game {
 	private Mesh mesh;
 	private Shader shader;
+	private Material material;
 	private Transform transform;
-	private Texture texture;
 	private Camera camera;
 	
 	public Game() {
 		mesh = new Mesh();
 //        mesh = ResourceLoader.loadMesh("box.obj");
-        texture = ResourceLoader.loadTexture("test.png");
-		shader = new Shader();
+//        texture = ResourceLoader.loadTexture("test.png");
+        material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(0, 1, 1));
+		shader = BasicShader.getInstance();
 		camera = new Camera();
 		
 		Vertex[] vertices = new Vertex[] {
@@ -35,12 +36,6 @@ public class Game {
 		transform = new Transform();
 		transform.setProjection(70.0f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
 		transform.setCamera(camera);
-		
-		shader.addVertexShader(ResourceLoader.loadShader("textureVertex.glsl"));
-		shader.addFragmentShader(ResourceLoader.loadShader("textureFragment.glsl"));
-		shader.compileShader();
-		
-		shader.addUniform("transform");
 	}
 	
 	// This is test
@@ -73,9 +68,8 @@ public class Game {
 	
 	public void render() {
 	    RenderUtil.setClearColor(transform.getCamera().getPos().div(2048f).abs());
-		shader.bind();
-		shader.setUniform("transform", transform.getProjectedTransformation());
-		texture.bind();
+	    shader.bind();
+	    shader.updateUniforms(transform.getTransformation(), transform.getProjectedTransformation(), material);
 		mesh.draw();
 	}
 }
