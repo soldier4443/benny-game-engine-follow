@@ -43,7 +43,7 @@ public class Vector2f {
 		return new Vector2f(x + r, y + r);
 	}
 	
-	public Vector2f subs(Vector2f r) {
+	public Vector2f sub(Vector2f r) {
 		return new Vector2f(x - r.getX(), y - r.getY());
 	}
 	

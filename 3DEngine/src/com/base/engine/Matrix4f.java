@@ -92,11 +92,9 @@ public class Matrix4f {
     
     public Matrix4f initCamera(Vector3f forward, Vector3f up) {
 	    // Why i do this?
-	    Vector3f f = forward;
-	    f.normalize();
+	    Vector3f f = forward.normalized();
 	    
-	    Vector3f r = up;
-	    r.normalize();
+	    Vector3f r = up.normalized();
 	    
 	    r = r.cross(f);
 	    Vector3f u = f.cross(r);
