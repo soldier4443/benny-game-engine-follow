@@ -14,8 +14,15 @@ public class Mesh {
 		ibo = glGenBuffers();
 		size = 0;
 	}
+    
+    public void addVertices(Vertex[] vertices, int[] indices) {
+	    addVertices(vertices, indices, false);
+    }
 	
-	public void addVertices(Vertex[] vertices, int[] indices) {
+	public void addVertices(Vertex[] vertices, int[] indices, boolean calculateNormals) {
+	    if (calculateNormals)
+	        calculateNormals(vertices, indices);
+	    
 		size = indices.length;
         
         // Java array != Native array
@@ -30,15 +37,38 @@ public class Mesh {
 	public void draw() {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12); // offset : 4 * 3
+		glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE * 4, 20); // offset : 4 * 3
 
 //		glDrawArrays(GL_TRIANGLES, 0, size);
         glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 		
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
 	}
+	
+	private void calculateNormals(Vertex[] vertices, int[] indices) {
+	   for (int i = 0; i < indices.length; i += 3) {
+	       int i0 = indices[i];
+	       int i1 = indices[i + 1];
+	       int i2 = indices[i + 2];
+	       
+	       Vector3f v1 = vertices[i1].getPos().sub(vertices[i0].getPos());  // First line
+           Vector3f v2 = vertices[i2].getPos().sub(vertices[i0].getPos());  // Second line
+           
+           Vector3f normal = v1.cross(v2).normalized();
+           
+           vertices[i0].setNormal(vertices[i0].getNormal().add(normal));
+           vertices[i1].setNormal(vertices[i1].getNormal().add(normal));
+           vertices[i2].setNormal(vertices[i2].getNormal().add(normal));
+       }
+       
+       for (int i = 0; i < vertices.length; i++)
+	       vertices[i].setNormal(vertices[i].getNormal().normalized());
+    }
 }

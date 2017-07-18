@@ -26,6 +26,10 @@ public class Util {
 
 			buffer.put(vertices[i].getTexturePos().getX());
 			buffer.put(vertices[i].getTexturePos().getY());
+			
+			buffer.put(vertices[i].getNormal().getX());
+			buffer.put(vertices[i].getNormal().getY());
+			buffer.put(vertices[i].getNormal().getZ());
 		}
 		
 		buffer.flip();
