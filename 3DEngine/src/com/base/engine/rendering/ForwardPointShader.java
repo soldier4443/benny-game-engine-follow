@@ -1,5 +1,7 @@
 package com.base.engine.rendering;
 
+import com.base.engine.components.BaseLight;
+import com.base.engine.components.PointLight;
 import com.base.engine.core.Matrix4f;
 import com.base.engine.core.Transform;
 
@@ -49,20 +51,20 @@ public class ForwardPointShader extends Shader {
         setUniformf("specularPower", material.getSpecularPower());
         setUniform("eyePos", getRenderingEngine().getMainCamera().getPos());
 
-        setUniform("pointLight", getRenderingEngine().getPointLight());
+        setUniformPointLight("pointLight", (PointLight) getRenderingEngine().getActiveLight());
     }
 
-    private void setUniform(String uniformName, PointLight pointLight) {
-        setUniform( uniformName + ".base", pointLight.getBaseLight());
-        setUniformf(uniformName + ".attenuation.constant", pointLight.getAttenuation().getConstant());
-        setUniformf(uniformName + ".attenuation.linear", pointLight.getAttenuation().getLinear());
-        setUniformf(uniformName + ".attenuation.exponent", pointLight.getAttenuation().getExponent());
-        setUniform( uniformName + ".position", pointLight.getPosition());
-        setUniformf(uniformName + ".range", pointLight.getRange());
-    }
-
-    private void setUniform(String uniformName, BaseLight baseLight) {
-        setUniform( uniformName + ".color", baseLight.getColor());
+    private void setUniformBaseLight(String uniformName, BaseLight baseLight) {
+        setUniform(uniformName + ".color", baseLight.getColor());
         setUniformf(uniformName + ".intensity", baseLight.getIntensity());
+    }
+
+    private void setUniformPointLight(String uniformName, PointLight pointLight) {
+        setUniformBaseLight(uniformName + ".base", pointLight);
+        setUniformf(uniformName + ".attenuation.constant", pointLight.getConstant());
+        setUniformf(uniformName + ".attenuation.linear", pointLight.getLinear());
+        setUniformf(uniformName + ".attenuation.exponent", pointLight.getExponent());
+        setUniform(uniformName + ".position", pointLight.getPosition());
+        setUniformf(uniformName + ".range", pointLight.getRange());
     }
 }
