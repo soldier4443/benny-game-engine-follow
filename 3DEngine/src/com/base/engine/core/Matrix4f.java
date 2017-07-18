@@ -25,8 +25,8 @@ public class Matrix4f {
 		return this;
 	}
     
-    public Matrix4f initTranslation(Vector3f pos) {
-	    return initTranslation(pos.getX(), pos.getY(), pos.getZ());
+    public Matrix4f initTranslation(Vector3f position) {
+	    return initTranslation(position.getX(), position.getY(), position.getZ());
     }
 
 	public Matrix4f initRotation(float x, float y, float z) {
@@ -59,8 +59,8 @@ public class Matrix4f {
 		return this;
 	}
 	
-	public Matrix4f initRotation(Vector3f pos) {
-        return initRotation(pos.getX(), pos.getY(), pos.getZ());
+	public Matrix4f initRotation(Vector3f position) {
+        return initRotation(position.getX(), position.getY(), position.getZ());
     }
 
 	public Matrix4f initScale(float x, float y, float z) {
@@ -72,21 +72,34 @@ public class Matrix4f {
 		return this;
 	}
     
-    public Matrix4f initScale(Vector3f pos) {
-        return initScale(pos.getX(), pos.getY(), pos.getZ());
+    public Matrix4f initScale(Vector3f position) {
+        return initScale(position.getX(), position.getY(), position.getZ());
     }
-	
+
 	public Matrix4f initPerspective(float fov, float aspectRatio, float zNear, float zFar) {
 		float ar = aspectRatio;
 		float tanHalfFOV = (float) Math.tan(fov / 2);   // calculate distance between the center and the side
-        
-        float zRange = zNear - zFar;
-		
+
+		float zRange = zNear - zFar;
+
 		m[0][0] = 1.0f / (tanHalfFOV * ar); m[0][1] = 0;                   m[0][2] = 0;                          m[0][3] = 0;
 		m[1][0] = 0;                        m[1][1] = 1.0f / tanHalfFOV;   m[1][2] = 0;                          m[1][3] = 0;
 		m[2][0] = 0;                        m[2][1] = 0;                   m[2][2] = (-zNear - zFar) / zRange;   m[2][3] = 2 * zNear * zFar / zRange;
 		m[3][0] = 0;                        m[3][1] = 0;                   m[3][2] = 1;                          m[3][3] = 0;   // Keep z component this way.. It's weird!
-		
+
+		return this;
+	}
+
+	public Matrix4f initOrthographic(float left, float right, float bottom, float top, float near, float far) {
+		float width = right - left;
+		float height = top - bottom;
+		float depth = far - near;
+
+		m[0][0] = 2 / width; m[0][1] = 0;          m[0][2] = 0;          m[0][3] = -(right + left) / width;
+		m[1][0] = 0;         m[1][1] = 2 / height; m[1][2] = 0;          m[1][3] = -(top + bottom) / width;
+		m[2][0] = 0;         m[2][1] = 0;          m[2][2] = -2 / depth; m[2][3] = -(far + near) / depth;
+		m[3][0] = 0;         m[3][1] = 0;          m[3][2] = 0;          m[3][3] = 1;
+
 		return this;
 	}
     

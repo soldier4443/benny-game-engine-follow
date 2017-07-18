@@ -4,11 +4,11 @@ import com.base.engine.core.Vector3f;
 
 public class BaseLight {
     private Vector3f color;
-    private float intentsity;
+    private float intensity;
     
-    public BaseLight(Vector3f color, float intentsity) {
+    public BaseLight(Vector3f color, float intensity) {
         this.color = color;
-        this.intentsity = intentsity;
+        this.intensity = intensity;
     }
     
     public Vector3f getColor() {
@@ -19,11 +19,11 @@ public class BaseLight {
         this.color = color;
     }
     
-    public float getIntentsity() {
-        return intentsity;
+    public float getIntensity() {
+        return intensity;
     }
     
-    public void setIntentsity(float intentsity) {
-        this.intentsity = intentsity;
+    public void setIntensity(float intensity) {
+        this.intensity = intensity;
     }
 }

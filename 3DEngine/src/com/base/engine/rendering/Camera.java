@@ -25,9 +25,9 @@ public class Camera {
         return projection.mul(cameraRotation.mul(cameraTranslation));
     }
     
-    public void input() {
+    public void input(float deltaTime) {
         float sensitivity = 0.2f;
-        float moveAmount = (float)(10 * Time.getDelta());
+        float moveAmount = (float)(10 * deltaTime);
 //        float rotationAmount = (float)(100 * Time.getDelta());
 
         if (Input.getKey(Input.KEY_ESCAPE)) {

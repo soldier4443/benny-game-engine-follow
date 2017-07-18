@@ -128,7 +128,7 @@ public class PhongShader extends Shader {
     
     private void setUniform(String uniformName, BaseLight baseLight) {
         setUniform( uniformName + ".color", baseLight.getColor());
-        setUniformf(uniformName + ".intensity", baseLight.getIntentsity());
+        setUniformf(uniformName + ".intensity", baseLight.getIntensity());
     }
     
     private void setUniform(String uniformName, PointLight pointLight) {

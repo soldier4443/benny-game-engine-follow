@@ -23,20 +23,20 @@ public class GameObject {
         components.add(component);
     }
 
-    public void input() {
+    public void input(float deltaTime) {
         for (GameComponent component : components)
-            component.input(transform);
+            component.input(transform, deltaTime);
 
         for (GameObject child : children)
-            child.input();
+            child.input(deltaTime);
     }
 
-    public void update() {
+    public void update(float deltaTime) {
         for (GameComponent component : components)
-            component.update(transform);
+            component.update(transform, deltaTime);
 
         for (GameObject child : children)
-            child.update();
+            child.update(deltaTime);
     }
 
     public void render(Shader shader) {

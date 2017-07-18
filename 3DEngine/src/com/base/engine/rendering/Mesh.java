@@ -80,8 +80,8 @@ public class Mesh {
 	       int i1 = indices[i + 1];
 	       int i2 = indices[i + 2];
 	       
-	       Vector3f v1 = vertices[i1].getPos().sub(vertices[i0].getPos());  // First line
-           Vector3f v2 = vertices[i2].getPos().sub(vertices[i0].getPos());  // Second line
+	       Vector3f v1 = vertices[i1].getPosition().sub(vertices[i0].getPosition());  // First line
+           Vector3f v2 = vertices[i2].getPosition().sub(vertices[i0].getPosition());  // Second line
            
            Vector3f normal = v1.cross(v2).normalized();
            

@@ -30,8 +30,8 @@ public class RenderingEngine {
         this.mainCamera = new Camera((float)Math.toRadians(70), (float)(Window.getWidth() / Window.getHeight()), 0.1f, 1000f);
     }
 
-    public void input() {
-        mainCamera.input();
+    public void input(float deltaTime) {
+        mainCamera.input(deltaTime);
     }
 
     public void render(GameObject object) {

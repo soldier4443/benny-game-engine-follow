@@ -6,38 +6,38 @@ import com.base.engine.core.Vector3f;
 public class Vertex {
 	public static final int SIZE = 8;
 	
-	private Vector3f pos;
-	private Vector2f texturePos;
+	private Vector3f position;
+	private Vector2f texturePosition;
 	private Vector3f normal;
 
-	public Vertex(Vector3f pos) {
-	    this(pos, new Vector2f(0, 0));
+	public Vertex(Vector3f position) {
+	    this(position, new Vector2f(0, 0));
 	}
 	
-	public Vertex(Vector3f pos, Vector2f texturePos) {
-		this(pos, texturePos, new Vector3f(0, 0, 0));
+	public Vertex(Vector3f position, Vector2f texturePosition) {
+		this(position, texturePosition, new Vector3f(0, 0, 0));
 	}
 	
-	public Vertex(Vector3f pos, Vector2f texturePos, Vector3f normal) {
-		this.pos = pos;
-		this.texturePos = texturePos;
+	public Vertex(Vector3f position, Vector2f texturePosition, Vector3f normal) {
+		this.position = position;
+		this.texturePosition = texturePosition;
 		this.normal = normal;
 	}
 
-    public Vector3f getPos() {
-		return pos;
+    public Vector3f getPosition() {
+		return position;
 	}
 
-	public void setPos(Vector3f pos) {
-		this.pos = pos;
+	public void setPosition(Vector3f position) {
+		this.position = position;
 	}
 
-    public Vector2f getTexturePos() {
-        return texturePos;
+    public Vector2f getTexturePosition() {
+        return texturePosition;
     }
 
-    public void setTexturePos(Vector2f texturePos) {
-        this.texturePos = texturePos;
+    public void setTexturePosition(Vector2f texturePosition) {
+        this.texturePosition = texturePosition;
     }
 	
 	public Vector3f getNormal() {

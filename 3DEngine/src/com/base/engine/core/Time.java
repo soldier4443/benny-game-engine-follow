@@ -5,19 +5,9 @@ package com.base.engine.core;
  * @author soldi
  */
 public class Time {
-	public static final long SECOND = 1000000000L;
+	private static final long SECOND = 1000000000L;
 	
-	private static double delta;
-	
-	public static long getTime() {
-		return System.nanoTime();
-	}
-	
-	public static double getDelta() {
-		return delta;
-	}
-	
-	public static void setDelta(double delta) {
-		Time.delta = delta;
+	public static double getTime() {
+		return System.nanoTime() / (double)SECOND;
 	}
 }

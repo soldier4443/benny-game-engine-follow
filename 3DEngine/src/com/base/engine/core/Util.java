@@ -21,12 +21,12 @@ public class Util {
 		FloatBuffer buffer = createFloatBuffer(vertices.length * Vertex.SIZE);
 		
 		for (int i = 0; i < vertices.length; i++) {
-			buffer.put(vertices[i].getPos().getX());
-			buffer.put(vertices[i].getPos().getY());
-			buffer.put(vertices[i].getPos().getZ());
+			buffer.put(vertices[i].getPosition().getX());
+			buffer.put(vertices[i].getPosition().getY());
+			buffer.put(vertices[i].getPosition().getZ());
 
-			buffer.put(vertices[i].getTexturePos().getX());
-			buffer.put(vertices[i].getTexturePos().getY());
+			buffer.put(vertices[i].getTexturePosition().getX());
+			buffer.put(vertices[i].getTexturePosition().getY());
 			
 			buffer.put(vertices[i].getNormal().getX());
 			buffer.put(vertices[i].getNormal().getY());
