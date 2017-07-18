@@ -7,9 +7,6 @@ import com.base.engine.rendering.Material;
 import com.base.engine.rendering.Mesh;
 import com.base.engine.rendering.Shader;
 
-/**
- * Created by soldi on 2017-07-19.
- */
 public class MeshRenderer extends GameComponent {
     private Mesh mesh;
     private Material material;
@@ -20,9 +17,7 @@ public class MeshRenderer extends GameComponent {
     }
 
     @Override
-    public void render(Transform transform) {
-        Shader shader = BasicShader.getInstance();
-
+    public void render(Transform transform, Shader shader) {
         shader.bind();
         shader.updateUniforms(transform, material);
 

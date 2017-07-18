@@ -1,9 +1,6 @@
 package com.base.engine.rendering;
 
-import com.base.engine.core.Matrix4f;
-import com.base.engine.core.Transform;
-import com.base.engine.core.Util;
-import com.base.engine.core.Vector3f;
+import com.base.engine.core.*;
 
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL32.*;
@@ -13,6 +10,8 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Shader {
+
+	private RenderingEngine renderingEngine;
 	private int program;
 	private HashMap<String, Integer> uniforms;
 	
@@ -125,6 +124,14 @@ public class Shader {
 		
 		
 		return shaderSource.toString();
+	}
+
+	public RenderingEngine getRenderingEngine() {
+		return renderingEngine;
+	}
+
+	public void setRenderingEngine(RenderingEngine renderingEngine) {
+		this.renderingEngine = renderingEngine;
 	}
 	
 	public void setUniformi(String uniformName, int value) {

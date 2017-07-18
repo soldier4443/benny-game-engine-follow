@@ -76,9 +76,9 @@ public class Matrix4f {
         return initScale(pos.getX(), pos.getY(), pos.getZ());
     }
 	
-	public Matrix4f initProjection(float fov, float width, float height, float zNear, float zFar) {
-	    float ar = width / height;  // aspect ratio
-		float tanHalfFOV = (float) Math.tan(Math.toRadians(fov / 2));   // calculate distance between the center and the side
+	public Matrix4f initPerspective(float fov, float aspectRatio, float zNear, float zFar) {
+		float ar = aspectRatio;
+		float tanHalfFOV = (float) Math.tan(fov / 2);   // calculate distance between the center and the side
         
         float zRange = zNear - zFar;
 		
@@ -90,7 +90,7 @@ public class Matrix4f {
 		return this;
 	}
     
-    public Matrix4f initCamera(Vector3f forward, Vector3f up) {
+    public Matrix4f initRotation(Vector3f forward, Vector3f up) {
 	    // Why i do this?
 	    Vector3f f = forward.normalized();
 	    
