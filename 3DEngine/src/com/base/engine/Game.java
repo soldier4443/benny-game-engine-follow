@@ -13,7 +13,7 @@ public class Game {
 		mesh = new Mesh();
 //        mesh = ResourceLoader.loadMesh("box.obj");
 //        texture = ResourceLoader.loadTexture("test.png");
-        material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(0, 1, 1));
+        material = new Material(ResourceLoader.loadTexture("test.png"), new Vector3f(1, 1, 1));
 		shader = PhongShader.getInstance();
 		camera = new Camera();
         transform = new Transform();
@@ -64,7 +64,7 @@ public class Game {
 		float sinTemp = (float) Math.sin(temp);
 
 		transform.setTranslation(0, 0, 5);
-//		transform.setRotation(0, sinTemp * 360, 0);
+		transform.setRotation(0, sinTemp * 360, 0);
 	}
 	
 	public void render() {
