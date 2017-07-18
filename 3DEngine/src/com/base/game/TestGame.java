@@ -4,49 +4,14 @@ import com.base.engine.core.*;
 import com.base.engine.rendering.*;
 
 public class TestGame implements Game {
-    private Mesh mesh;
-    private Shader shader;
-    private Material material;
-    private Transform transform;
+
     private Camera camera;
 
-    PointLight pointLight1 = new PointLight(
-            new BaseLight(new Vector3f(1, 0, 0),0.8f),
-            new Attenuation(0, 0, 1),
-            new Vector3f(-2, 0, 5f),
-            10);
-
-    PointLight pointLight2 = new PointLight(
-            new BaseLight(new Vector3f(0, 0, 1),0.8f),
-            new Attenuation(0, 0, 1),
-            new Vector3f(2, 0, 7f),
-            10);
-
-    PointLight pointLightForSpot = new PointLight(
-            new BaseLight(new Vector3f(1, 1, 1),0.8f),
-            new Attenuation(0, 0, 0.01f),
-            new Vector3f(2, 0, 7f),
-            30);
-
-    SpotLight spotLight1 = new SpotLight(pointLightForSpot,
-            new Vector3f(1, 1, 1),
-            0.8f);
+    private GameObject root;
 
     public void init() {
-        material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
-        shader = PhongShader.getInstance();
+        root = new GameObject();
         camera = new Camera();
-        transform = new Transform();
-
-//        Vertex[] vertices = new Vertex[] { new Vertex( new Vector3f( -1.0f, -1.0f, 0.5773f ), new Vector2f( 0.0f, 0.0f ) ),
-//                                           new Vertex( new Vector3f( 0.0f, -1.0f, -1.15475f ), new Vector2f( 0.5f, 0.0f ) ),
-//                                           new Vertex( new Vector3f( 1.0f, -1.0f, 0.5773f ),new Vector2f( 1.0f, 0 ) ),
-//                                           new Vertex( new Vector3f( 0.0f, 1.0f, 0.0f ), new Vector2f( 0.5f, 1.0f ) ) };
-//
-//        int[] indices = new int[] { 0, 3, 1,
-//                                    1, 3, 2,
-//                                    2, 3, 0,
-//                                    1, 2, 0 };
 
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
@@ -55,62 +20,33 @@ public class TestGame implements Game {
                 new Vertex( new Vector3f(-fieldWidth, 0.0f, fieldDepth * 3), new Vector2f(0.0f, 1.0f)),
                 new Vertex( new Vector3f(fieldWidth * 3, 0.0f, -fieldDepth), new Vector2f(1.0f, 0.0f)),
                 new Vertex( new Vector3f(fieldWidth * 3, 0.0f, fieldDepth * 3), new Vector2f(1.0f, 1.0f))};
+
         int planeIndices[] = { 0, 1, 2,
                 2, 1, 3};
 
-        mesh = new Mesh(planeVertices, planeIndices, true);
+        Mesh mesh = new Mesh(planeVertices, planeIndices, true);
+        Material material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
 
-        transform.setProjection(70.0f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
-        transform.setCamera(camera);
+        MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
 
-        PhongShader.setAmbientLight(new Vector3f(0.01f, 0.01f, 0.01f));
-        PhongShader.setDirectionalLight(new DirectionalLight(
-                new BaseLight(new Vector3f(1, 1, 1), 0.1f),
-                new Vector3f(1, 1, 1)
-        ));
+        root.addComponent(meshRenderer);
 
-        PhongShader.setPointLights(new PointLight[]{pointLight1, pointLight2});
-        PhongShader.setSpotLights(new SpotLight[]{spotLight1});
+        Transform.setProjection(70.0f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
+        Transform.setCamera(camera);
     }
 
     // This is test
     public void input() {
         camera.input();
-
-//		if (Input.getKeyDown(Input.KEY_UP)) {
-//			System.out.println("We're just pressed up!");
-//		} else if (Input.getKeyUp(Input.KEY_UP)) {
-//			System.out.println("We're just released up!");
-//		}
-//
-//		if (Input.getMouseDown(1)) {
-//			System.out.println("We're just right clicked at " + Input.getMousePosition());
-//		} else if (Input.getMouseUp(1)) {
-//			System.out.println("We're just released right moues button!");
-//		}
+        root.input();
     }
 
-    float temp = 0.0f;
-
     public void update() {
-        temp += Time.getDelta();
-
-        float sinTemp = (float) Math.sin(temp);
-
-        transform.setTranslation(0, -1, 5);
-//		transform.setRotation(0, sinTemp * 360, 0);
-
-        pointLight1.setPosition(new Vector3f(3, 0, 8.0f * (float)(Math.sin(temp) + 0.5) + 10));
-        pointLight2.setPosition(new Vector3f(7, 0, 8.0f * (float)(Math.cos(temp) + 0.5) + 10));
-
-        spotLight1.getPointLight().setPosition(camera.getPos());
-        spotLight1.setDirection(camera.getForward());
+        root.getTransform().setTranslation(0, -1, 5);
+        root.update();
     }
 
     public void render() {
-        RenderUtil.setClearColor(transform.getCamera().getPos().div(2048f).abs());
-        shader.bind();
-        shader.updateUniforms(transform, material);
-        mesh.draw();
+        root.render();
     }
 }

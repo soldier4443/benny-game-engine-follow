@@ -2,14 +2,16 @@ package com.base.engine.core;
 
 import com.base.engine.rendering.Camera;
 
+import java.lang.annotation.Target;
+
 public class Transform {
-    private Camera camera;
+    private static Camera camera;
     
-    private float zNear;
-    private float zFar;
-    private float width;
-    private float height;
-    private float fov;       // field of view (angle?)
+    private static float zNear;
+    private static float zFar;
+    private static float width;
+    private static float height;
+    private static float fov;       // field of view (angle?)
     
 	private Vector3f translation;
 	private Vector3f rotation;
@@ -50,12 +52,12 @@ public class Transform {
 	    return projectionMatrix.mul(cameraRotation.mul(cameraTranslation.mul(getTransformation())));
     }
     
-    public void setProjection(float fov, float width, float height, float zNear, float zFar) {
-	    this.fov = fov;
-	    this.width = width;
-	    this.height = height;
-	    this.zNear = zNear;
-	    this.zFar = zFar;
+    public static void setProjection(float fov, float width, float height, float zNear, float zFar) {
+	    Transform.fov = fov;
+	    Transform.width = width;
+	    Transform.height = height;
+	    Transform.zNear = zNear;
+	    Transform.zFar = zFar;
     }
 
 	public Vector3f getTranslation() {
@@ -94,11 +96,11 @@ public class Transform {
 		this.scale = new Vector3f(x, y, z);
 	}
     
-    public Camera getCamera() {
+    public static Camera getCamera() {
         return camera;
     }
     
-    public void setCamera(Camera camera) {
-        this.camera = camera;
+    public static void setCamera(Camera camera) {
+        Transform.camera = camera;
     }
 }
