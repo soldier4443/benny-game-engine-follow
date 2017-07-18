@@ -64,13 +64,13 @@ public class Game {
 		float sinTemp = (float) Math.sin(temp);
 
 		transform.setTranslation(0, 0, 5);
-		transform.setRotation(0, sinTemp * 360, 0);
+//		transform.setRotation(0, sinTemp * 360, 0);
 	}
 	
 	public void render() {
 	    RenderUtil.setClearColor(transform.getCamera().getPos().div(2048f).abs());
 	    shader.bind();
-	    shader.updateUniforms(transform.getTransformation(), transform.getProjectedTransformation(), material);
+	    shader.updateUniforms(transform, material);
 		mesh.draw();
 	}
 }
