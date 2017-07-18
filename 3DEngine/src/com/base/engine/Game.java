@@ -20,6 +20,16 @@ public class Game {
         new Attenuation(0, 0, 1),
         new Vector3f(2, 0, 7f),
         10);
+    
+    PointLight pointLightForSpot = new PointLight(
+        new BaseLight(new Vector3f(1, 1, 1),0.8f),
+        new Attenuation(0, 0, 0.01f),
+        new Vector3f(2, 0, 7f),
+        100);
+    
+    SpotLight spotLight1 = new SpotLight(pointLightForSpot,
+        new Vector3f(1, 1, 1),
+        0.9f);
 	
 	public Game() {
 		mesh = new Mesh();
@@ -43,26 +53,26 @@ public class Game {
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
 
-        Vertex[] pointLightVertices = new Vertex[] { new Vertex( new Vector3f(-fieldWidth, 0.0f, -fieldDepth), new Vector2f(0.0f, 0.0f)),
-                                                     new Vertex( new Vector3f(-fieldWidth, 0.0f, fieldDepth * 3), new Vector2f(0.0f, 1.0f)),
-                                                     new Vertex( new Vector3f(fieldWidth * 3, 0.0f, -fieldDepth), new Vector2f(1.0f, 0.0f)),
-                                                     new Vertex( new Vector3f(fieldWidth * 3, 0.0f, fieldDepth * 3), new Vector2f(1.0f, 1.0f))};
+        Vertex[] planeVertices = new Vertex[] { new Vertex( new Vector3f(-fieldWidth, 0.0f, -fieldDepth), new Vector2f(0.0f, 0.0f)),
+                                                new Vertex( new Vector3f(-fieldWidth, 0.0f, fieldDepth * 3), new Vector2f(0.0f, 1.0f)),
+                                                new Vertex( new Vector3f(fieldWidth * 3, 0.0f, -fieldDepth), new Vector2f(1.0f, 0.0f)),
+                                                new Vertex( new Vector3f(fieldWidth * 3, 0.0f, fieldDepth * 3), new Vector2f(1.0f, 1.0f))};
+        int planeIndices[] = { 0, 1, 2,
+                               2, 1, 3};
 
-        int pointLightIndices[] = { 0, 1, 2,
-                                    2, 1, 3};
-
-		mesh.addVertices(pointLightVertices, pointLightIndices, true);
+		mesh.addVertices(planeVertices, planeIndices, true);
 		
 		transform.setProjection(70.0f, Window.getWidth(), Window.getHeight(), 0.1f, 1000);
 		transform.setCamera(camera);
 		
-		PhongShader.setAmbientLight(new Vector3f(0.1f, 0.1f, 0.1f));
+		PhongShader.setAmbientLight(new Vector3f(0.01f, 0.01f, 0.01f));
 //		PhongShader.setDirectionalLight(new DirectionalLight(
 //		    new BaseLight(new Vector3f(1, 1, 1), 0.8f),
 //            new Vector3f(1, 1, 1)
 //        ));
         
         PhongShader.setPointLights(new PointLight[]{pointLight1, pointLight2});
+        PhongShader.setSpotLights(new SpotLight[]{spotLight1});
     }
 	
 	// This is test
@@ -94,6 +104,9 @@ public class Game {
         
         pointLight1.setPosition(new Vector3f(3, 0, 8.0f * (float)(Math.sin(temp) + 0.5) + 10));
         pointLight2.setPosition(new Vector3f(7, 0, 8.0f * (float)(Math.cos(temp) + 0.5) + 10));
+        
+        spotLight1.getPointLight().setPosition(camera.getPos());
+        spotLight1.setDirection(camera.getForward());
 	}
 	
 	public void render() {

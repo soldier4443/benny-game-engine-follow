@@ -1,6 +1,7 @@
 #version 330
 
 const int MAX_POINT_LIGHTS = 4;
+const int MAX_SPOT_LIGHTS = 4;
 
 in vec2 texturePos0;
 in vec3 normal0;
@@ -35,6 +36,13 @@ struct PointLight
   float range;
 };
 
+struct SpotLight
+{
+  PointLight pointLight;
+  vec3 direction;
+  float cutoff;
+};
+
 uniform vec3 eyePos;
 
 uniform vec3 baseColor;
@@ -46,6 +54,7 @@ uniform float specularPower;
 
 uniform DirectionalLight directionalLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
+uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 vec4 calculateLight(BaseLight base, vec3 direction, vec3 normal)
 {
@@ -98,6 +107,23 @@ vec4 calculatePointLight(PointLight pl, vec3 normal)
   return color / attenuation;
 }
 
+vec4 calculateSpotLight(SpotLight sl, vec3 normal)
+{
+  vec3 lightDirection = normalize(worldPos0 - sl.pointLight.position);
+  float spotFactor = dot(lightDirection, sl.direction);
+
+  vec4 color = vec4(0, 0, 0, 0);
+
+  if (spotFactor > sl.cutoff)
+  {
+    color = calculatePointLight(sl.pointLight, normal) *
+            (1.0 - (1.0 - spotFactor) / (1.0 - sl.cutoff));
+            // Darker as getting closer to the edge
+  }
+
+  return color;
+}
+
 void main()
 {
   vec4 textureColor = texture2D(sampler, texturePos0.xy);
@@ -114,6 +140,10 @@ void main()
   for (int i = 0; i < MAX_POINT_LIGHTS; i++)
     if (pointLights[i].base.intensity > 0)
       totalLight += calculatePointLight(pointLights[i], normal);
+
+  for(int i = 0; i < MAX_SPOT_LIGHTS; i++)
+    if(spotLights[i].pointLight.base.intensity > 0)
+      totalLight += calculateSpotLight(spotLights[i], normal);
 
   fragColor = color * totalLight;
 }
