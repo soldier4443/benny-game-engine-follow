@@ -1,6 +1,7 @@
-package com.base.engine;
+package com.base.engine.rendering;
 
-import static org.lwjgl.opengl.GL20.glUniform1i;
+import com.base.engine.core.Transform;
+import com.base.engine.core.Vector3f;
 
 /**
  * Created by soldi on 2017-07-18.

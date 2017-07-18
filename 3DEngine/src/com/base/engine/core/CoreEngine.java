@@ -1,19 +1,32 @@
-package com.base.engine;
+package com.base.engine.core;
 
-public class MainComponent {
-	public static final int WIDTH = 1200;
-	public static final int HEIGHT = 600;
-	public static final String TITLE = "3D ENGINE";
-	public static final double FRAME_CAP = 5000.0;	// Maximum frame rate
-	
+import com.base.game.Game;
+import com.base.engine.rendering.RenderUtil;
+import com.base.engine.rendering.Window;
+
+public class CoreEngine {
 	private boolean isRunning;
 	private Game game;
+	private int width;
+	private int height;
+	private double frameTime;
 	
-	public MainComponent() {
+	public CoreEngine(int width, int height, double frameRate, Game game) {
+		this.isRunning = false;
+		this.game = game;
+		this.width = width;
+		this.height = height;
+		this.frameTime = 1.0 / frameRate;
+	}
+
+	private void initializeRenderingSystem() {
 		System.out.println(RenderUtil.getOpenGLVersion());
 		RenderUtil.initGraphics();
-		isRunning = false;
-		game = new Game();
+	}
+
+	public void createWindow(String title) {
+		Window.createWindow(width, height, title);
+		initializeRenderingSystem();
 	}
 	
 	public void start() {
@@ -36,10 +49,10 @@ public class MainComponent {
 		int frames = 0;
 		long frameCounter = 0;
 		
-		final double frameTime = 1.0 / FRAME_CAP;
-		
 		long lastTime = Time.getTime();
 		double unprocessedTime = 0;		// Accumulate time
+
+		game.init();
 		
 		while (isRunning) {
 			boolean render = false;
@@ -97,13 +110,5 @@ public class MainComponent {
 	
 	private void cleanup() {
 		Window.dispose();
-	}
-	
-	public static void main(String[] args) {
-		Window.createWindow(WIDTH, HEIGHT, TITLE);
-		
-		MainComponent game = new MainComponent();
-		
-		game.start();
 	}
 }

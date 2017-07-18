@@ -1,4 +1,4 @@
-package com.base.engine;
+package com.base.engine.core;
 
 public class Vector3f {
     public static final Vector3f ZERO = new Vector3f(0, 0, 0);
