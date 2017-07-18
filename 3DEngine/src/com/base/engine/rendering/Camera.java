@@ -5,10 +5,6 @@ import com.base.engine.core.Time;
 import com.base.engine.core.Vector2f;
 import com.base.engine.core.Vector3f;
 
-/**
- * Created by nyh0111 on 2017-07-17.
- */
-
 public class Camera {
     private Vector3f pos;
     private Vector3f forward;

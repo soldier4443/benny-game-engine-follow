@@ -1,14 +1,8 @@
 package com.base.game;
 
-import com.base.engine.core.Time;
-import com.base.engine.core.Transform;
-import com.base.engine.core.Vector2f;
-import com.base.engine.core.Vector3f;
+import com.base.engine.core.*;
 import com.base.engine.rendering.*;
 
-/**
- * Created by soldi on 2017-07-19.
- */
 public class TestGame implements Game {
     private Mesh mesh;
     private Shader shader;

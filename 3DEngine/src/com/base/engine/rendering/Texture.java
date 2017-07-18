@@ -7,9 +7,6 @@ import java.io.FileInputStream;
 
 import static org.lwjgl.opengl.GL11.*;
 
-/**
- * Created by soldi on 2017-07-18.
- */
 public class Texture {
     private int id;
     

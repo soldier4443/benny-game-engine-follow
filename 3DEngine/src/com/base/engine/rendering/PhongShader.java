@@ -3,10 +3,6 @@ package com.base.engine.rendering;
 import com.base.engine.core.Transform;
 import com.base.engine.core.Vector3f;
 
-/**
- * Created by soldi on 2017-07-18.
- */
-
 public class PhongShader extends Shader {
     
     public static final int MAX_POINT_LIGHTS = 4;

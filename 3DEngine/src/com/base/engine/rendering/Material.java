@@ -2,9 +2,6 @@ package com.base.engine.rendering;
 
 import com.base.engine.core.Vector3f;
 
-/**
- * Created by soldi on 2017-07-18.
- */
 public class Material {
     private Texture texture;
     private Vector3f color;

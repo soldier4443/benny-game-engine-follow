@@ -2,10 +2,6 @@ package com.base.engine.rendering;
 
 import com.base.engine.core.Transform;
 
-/**
- * Created by soldi on 2017-07-18.
- */
-
 public class BasicShader extends Shader {
 
     private static class Singleton {

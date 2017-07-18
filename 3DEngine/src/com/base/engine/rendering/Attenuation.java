@@ -1,9 +1,5 @@
 package com.base.engine.rendering;
 
-/**
- * Created by nyh0111 on 2017-07-18.
- */
-
 public class Attenuation {
     private float constant;
     private float linear;
