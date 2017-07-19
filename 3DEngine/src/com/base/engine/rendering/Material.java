@@ -26,11 +26,11 @@ public class Material {
     public Texture getTexture() {
         return texture;
     }
-
+    
     public void setTexture(Texture texture) {
         this.texture = texture;
     }
-
+    
     public Vector3f getColor() {
         return color;
     }

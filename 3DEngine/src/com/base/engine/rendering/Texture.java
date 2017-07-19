@@ -17,11 +17,11 @@ public class Texture {
     public Texture(int id) {
         this.id = id;
     }
-
+    
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, id);
     }
-
+    
     public int getId() {
         return id;
     }

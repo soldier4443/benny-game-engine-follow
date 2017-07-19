@@ -7,52 +7,52 @@ import java.lang.annotation.Target;
 
 public class PointLight extends BaseLight {
     private static final int COLOR_DEPTH = 256;
-
+    
     private Vector3f attenuation;
     private float range;
-
+    
     public PointLight(Vector3f color, float intensity, Vector3f attenuation) {
         super(color, intensity);
         this.attenuation = attenuation;
-
+        
         float a = attenuation.getZ();
         float b = attenuation.getY();
         float c = attenuation.getX() - COLOR_DEPTH * getIntensity() * getColor().max();
-
-        this.range = (float)(-b + Math.sqrt(b * b - 4 * a * c) / (2 * a));
+        
+        this.range = (float) (-b + Math.sqrt(b * b - 4 * a * c) / (2 * a));
         System.out.println(range);
-
+        
         setShader(ForwardPointShader.getInstance());
     }
-
+    
     public float getConstant() {
         return attenuation.getX();
     }
-
+    
     public void setConstant(float constant) {
         attenuation.setX(constant);
     }
-
+    
     public float getLinear() {
         return attenuation.getY();
     }
-
+    
     public void setLinear(float linear) {
         attenuation.setY(linear);
     }
-
+    
     public float getExponent() {
         return attenuation.getZ();
     }
-
+    
     public void setExponent(float exponent) {
         attenuation.setZ(exponent);
     }
-
+    
     public float getRange() {
         return range;
     }
-
+    
     public void setRange(float range) {
         this.range = range;
     }

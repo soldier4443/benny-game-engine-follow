@@ -13,20 +13,20 @@ public class BaseLight extends GameComponent {
         this.color = color;
         this.intensity = intensity;
     }
-
+    
     @Override
     public void addToRenderingEngine(RenderingEngine renderingEngine) {
         renderingEngine.addLight(this);
     }
-
+    
     public void setShader(Shader shader) {
         this.shader = shader;
     }
-
+    
     public Shader getShader() {
         return shader;
     }
-
+    
     public Vector3f getColor() {
         return color;
     }

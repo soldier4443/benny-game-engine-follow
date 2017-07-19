@@ -6,11 +6,11 @@ import com.base.engine.rendering.ForwardDirectionalShader;
 
 public class DirectionalLight extends BaseLight {
     private Vector3f direction;
-
+    
     public DirectionalLight(Vector3f color, float intensity, Vector3f direction) {
         super(color, intensity);
         this.direction = direction.normalized();
-
+        
         setShader(ForwardDirectionalShader.getInstance());
     }
     
