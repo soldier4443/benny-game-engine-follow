@@ -44,13 +44,13 @@ public class Vector3f {
     
     // rotate around the axis
     public Vector3f rotate(Vector3f axis, float angle) {
-        return rotate(new Quaternion().initRotation(axis, angle));
+        return rotate(new Quaternion(axis, angle));
 //        float sinAngle = (float) Math.sin(-angle);
 //        float cosAngle = (float) Math.cos(-angle);
 //
-//        return this.cross(axis.mul(sinAngle))
-//                     .add((this.mul(cosAngle))
-//                     .add(axis.mul(this.dot(axis.mul(1 - cosAngle)))));
+//        return this.cross(axis.getTransformedPosition(sinAngle))
+//                     .add((this.getTransformedPosition(cosAngle))
+//                     .add(axis.getTransformedPosition(this.dot(axis.getTransformedPosition(1 - cosAngle)))));
     }
     
     public Vector3f rotate(Quaternion quaternion) {

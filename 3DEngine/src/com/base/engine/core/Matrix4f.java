@@ -144,6 +144,12 @@ public class Matrix4f {
 		
 		return rt;
 	}
+
+	public Vector3f getTransformedPosition(Vector3f r) {
+		return new Vector3f(m[0][0] * r.getX() + m[0][1] * r.getY() + m[0][2] * r.getZ() + m[0][3],
+							m[1][0] * r.getX() + m[1][1] * r.getY() + m[1][2] * r.getZ() + m[1][3],
+							m[2][0] * r.getX() + m[2][1] * r.getY() + m[2][2] * r.getZ() + m[2][3]);
+	}
 	
 	public float[][] getM() {
 		float[][] res = new float[4][4];
