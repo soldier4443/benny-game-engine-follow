@@ -26,7 +26,7 @@ public class TestGame extends Game {
         
         GameObject planeObject = new GameObject();
         planeObject.addComponent(meshRenderer);
-        planeObject.getTransform().setPosition(0, -1, 5);
+        planeObject.getTransform().getPosition().set(0, -1, 5);
         
         
         GameObject directionalLightObject = new GameObject();
@@ -43,22 +43,22 @@ public class TestGame extends Game {
                 ));
                 
                 pointLightObject.getTransform().setPosition(new Vector3f(i * 5, 0, j * 5));
-                
-                getRootObject().addChild(pointLightObject);
+
+//                getRootObject().addChild(pointLightObject);
             }
         }
         
         
         GameObject spotLightObject = new GameObject();
         spotLightObject.addComponent(new SpotLight(
-            new Vector3f(0, 1, 1), 0.4f,
-            new Vector3f(0, 0, 0.08f),
-            new Vector3f(-1, -1, -1), 0.9f));
+            new Vector3f(0, 1, 1), 0.8f,
+            new Vector3f(0, 0, 0.08f), 0.7f));
         
-        spotLightObject.getTransform().setPosition(24, 5, 24);
+        spotLightObject.getTransform().getPosition().set(5, 0, 5);
+        spotLightObject.getTransform().setRotation(new Quaternion().initRotation(new Vector3f(0, 1, 0), (float) Math.toRadians(90.0f)));
         
         getRootObject().addChild(planeObject);
-        getRootObject().addChild(directionalLightObject);
+//        getRootObject().addChild(directionalLightObject);
         getRootObject().addChild(spotLightObject);
     }
 }

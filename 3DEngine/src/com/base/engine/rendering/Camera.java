@@ -57,10 +57,10 @@ public class Camera {
             boolean rotX = deltaPos.getY() != 0;
             
             if (rotY)
-                rotateY(deltaPos.getX() * sensitivity);
+                rotateY((float)Math.toRadians(deltaPos.getX() * sensitivity));
             
             if (rotX)
-                rotateX(-deltaPos.getY() * sensitivity);
+                rotateX((float)Math.toRadians(-deltaPos.getY() * sensitivity));
             
             if (rotX || rotY) {
                 Input.setMousePosition(new Vector2f(Window.getWidth() / 2, Window.getHeight() / 2));
@@ -80,24 +80,24 @@ public class Camera {
         // 1. Calculate horizontal axis of the camera
         // 2. rotate around the horizontal axis
         // 3. calculate new up vector after rotation
-        
+
         Vector3f horizontalAxis = Vector3f.Y.cross(forward).normalized();
-        
+
         forward = forward.rotate(angle, Vector3f.Y).normalized();
-        
+
         up = forward.cross(horizontalAxis).normalized();
     }
-    
+
     // Tilting up / down
     public void rotateX(float angle) {
         // 1. Calculate horizontal axis of the camera
         // 2. rotate around the horizontal axis
         // 3. calculate new up vector after rotation
-        
+
         Vector3f horizontalAxis = Vector3f.Y.cross(forward).normalized();
-        
+
         forward = forward.rotate(angle, horizontalAxis).normalized();
-        
+
         up = forward.cross(horizontalAxis).normalized();
     }
     

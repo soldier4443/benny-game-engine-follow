@@ -44,19 +44,13 @@ public class Vector3f {
     
     // rotate around the axis
     public Vector3f rotate(float angle, Vector3f axis) {
-        // Give sin(y) rot -> imaginary part (x, y, z)
-        // Give cos(x) rot -> realistic part
+        return rotate(new Quaternion().initRotation(axis, angle));
+    }
+    
+    public Vector3f rotate(Quaternion quaternion) {
+        Quaternion conjugate = quaternion.conjugate();
         
-        float sinHalfAngle = (float) Math.sin(Math.toRadians(angle / 2));
-        float cosHalfAngle = (float) Math.cos(Math.toRadians(angle / 2));
-        
-        float rX = axis.getX() * sinHalfAngle;
-        float rY = axis.getY() * sinHalfAngle;
-        float rZ = axis.getZ() * sinHalfAngle;
-        float rW = cosHalfAngle;
-        
-        Quaternion rotation = new Quaternion(rX, rY, rZ, rW);
-        Quaternion w = rotation.mul(this).mul(rotation.conjugate());
+        Quaternion w = quaternion.mul(this).mul(conjugate);
         
         return new Vector3f(w.getX(), w.getY(), w.getZ());
     }
@@ -159,6 +153,12 @@ public class Vector3f {
     }
     
     public void setZ(float z) {
+        this.z = z;
+    }
+    
+    public void set(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
         this.z = z;
     }
 }
