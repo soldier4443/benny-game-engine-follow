@@ -44,7 +44,7 @@ public class TestGame extends Game {
                 
                 pointLightObject.getTransform().setPosition(new Vector3f(i * 5, 0, j * 5));
 
-//                getRootObject().addChild(pointLightObject);
+                getRootObject().addChild(pointLightObject);
             }
         }
         
@@ -58,7 +58,13 @@ public class TestGame extends Game {
         spotLightObject.getTransform().setRotation(new Quaternion().initRotation(new Vector3f(0, 1, 0), (float) Math.toRadians(90.0f)));
         
         getRootObject().addChild(planeObject);
-//        getRootObject().addChild(directionalLightObject);
+        getRootObject().addChild(directionalLightObject);
         getRootObject().addChild(spotLightObject);
+        
+        Camera camera = new Camera((float) Math.toRadians(70), (float) (Window.getWidth() / Window.getHeight()), 0.1f, 1000f);
+        GameObject cameraObject = new GameObject().addComponent(camera);
+        cameraObject.getTransform().setRotation(new Quaternion().initRotation(Vector3f.Y, (float)Math.toRadians(90)));
+        
+        getRootObject().addChild(cameraObject);
     }
 }

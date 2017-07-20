@@ -1,6 +1,7 @@
 package com.base.engine.core;
 
 import com.base.engine.components.BaseLight;
+import com.base.engine.components.Camera;
 import com.base.engine.components.DirectionalLight;
 import com.base.engine.components.PointLight;
 import com.base.engine.rendering.*;
@@ -37,16 +38,11 @@ public class RenderingEngine {
         glEnable(GL_TEXTURE_2D);
 //		glEnable(GL_FRAMEBUFFER_SRGB);
         
-        this.mainCamera = new Camera((float) Math.toRadians(70), (float) (Window.getWidth() / Window.getHeight()), 0.1f, 1000f);
         this.ambientLight = new Vector3f(0.2f, 0.2f, 0.2f);
     }
     
     public Vector3f getAmbientLight() {
         return ambientLight;
-    }
-    
-    public void input(float deltaTime) {
-        mainCamera.input(deltaTime);
     }
     
     public void render(GameObject object) {
