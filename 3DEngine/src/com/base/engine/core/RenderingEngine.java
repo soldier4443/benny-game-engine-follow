@@ -51,8 +51,8 @@ public class RenderingEngine {
         lights.clear();
         object.addToRenderingEngine(this);
         
-        ForwardAmbientShader.getInstance().setRenderingEngine(this);
-        object.render(ForwardAmbientShader.getInstance());
+//        ForwardAmbientShader.getInstance().setRenderingEngine(this);
+        object.render(ForwardAmbientShader.getInstance(), this);
         
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE); // Add
@@ -60,11 +60,11 @@ public class RenderingEngine {
         glDepthFunc(GL_EQUAL);   // Write the pixels if it has exact same depth value as the pixel we found to be near to the screen
         
         for (BaseLight light : lights) {
-            light.getShader().setRenderingEngine(this);
+//            light.getShader().setRenderingEngine(this);
             
             activeLight = light;
             
-            object.render(light.getShader());
+            object.render(light.getShader(), this);
         }
         
         glDepthFunc(GL_LESS);

@@ -10,8 +10,6 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class Shader {
-    
-    private RenderingEngine renderingEngine;
     private int program;
     private HashMap<String, Integer> uniforms;
     
@@ -29,7 +27,7 @@ public class Shader {
         glUseProgram(program);
     }
     
-    public void updateUniforms(Transform transform, Material material) {
+    public void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine) {
     
     }
     
@@ -124,14 +122,6 @@ public class Shader {
         
         
         return shaderSource.toString();
-    }
-    
-    public RenderingEngine getRenderingEngine() {
-        return renderingEngine;
-    }
-    
-    public void setRenderingEngine(RenderingEngine renderingEngine) {
-        this.renderingEngine = renderingEngine;
     }
     
     public void setUniformi(String uniformName, int value) {

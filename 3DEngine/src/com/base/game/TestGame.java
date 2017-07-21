@@ -32,13 +32,16 @@ public class TestGame extends Game {
         
         Mesh mesh = new Mesh(planeVertices, planeIndices, true);
         Mesh mesh2 = new Mesh(planeVertices2, planeIndices2, true);
-        Material material = new Material(new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
         
-        MeshRenderer meshRenderer = new MeshRenderer(mesh, material);
+        Material material = new Material();//new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
+        material.addTexture("diffuse", new Texture("test.png"));
+        material.addFloat("specularIntensity", 1.0f);
+        material.addFloat("specularPower", 8.0f);
+        
         
         GameObject planeObject = new GameObject();
-        planeObject.addComponent(meshRenderer);
-        planeObject.getTransform().getPosition().set(0, -1, 5);
+        planeObject.addComponent(new MeshRenderer(mesh, material));
+        planeObject.getTransform().setPosition(new Vector3f(0, -1, 5));
 
 
         DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, 1), 0.4f);
@@ -57,7 +60,7 @@ public class TestGame extends Game {
                 
                 pointLightObject.getTransform().setPosition(new Vector3f(i * 5, 0, j * 5));
 
-                getRootObject().addChild(pointLightObject);
+                addObject(pointLightObject);
             }
         }
         
@@ -67,7 +70,7 @@ public class TestGame extends Game {
             new Vector3f(0, 1, 1), 0.8f,
             new Vector3f(0, 0, 0.08f), 0.7f));
         
-        spotLightObject.getTransform().getPosition().set(5, 0, 5);
+        spotLightObject.getTransform().setPosition(new Vector3f(5, 0, 5));
         spotLightObject.getTransform().setRotation(new Quaternion(new Vector3f(0, 1, 0), (float) Math.toRadians(90.0f)));
         
         Camera camera = new Camera((float) Math.toRadians(70), (float) (Window.getWidth() / Window.getHeight()), 0.1f, 1000f);
@@ -84,15 +87,15 @@ public class TestGame extends Game {
 
         plane1.addChild(plane2);
         plane2.addChild(cameraObject);
-//        getRootObject().addChild(cameraObject);
+//        addObject(cameraObject);
         
         plane1.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(45)));
         cameraObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(45)));
     
-        getRootObject().addChild(planeObject);
-        getRootObject().addChild(directionalLightObject);
-        getRootObject().addChild(spotLightObject);
-        getRootObject().addChild(plane1);
+        addObject(planeObject);
+        addObject(directionalLightObject);
+        addObject(spotLightObject);
+        addObject(plane1);
     }
 
     float time = 0;

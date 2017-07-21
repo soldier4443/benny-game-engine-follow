@@ -3,7 +3,7 @@ package com.base.engine.core;
 // Generic container for every game!
 public abstract class Game {
     
-    private GameObject root;
+    private GameObject root = new GameObject();
     
     public void init() {
     
@@ -17,11 +17,15 @@ public abstract class Game {
         getRootObject().update(deltaTime);
     }
     
-    public GameObject getRootObject() {
-        if (root == null) {
-            root = new GameObject();
-        }
-        
+    public void render(RenderingEngine renderingEngine) {
+        renderingEngine.render(getRootObject());
+    }
+    
+    public void addObject(GameObject object) {
+        getRootObject().addChild(object);
+    }
+    
+    private GameObject getRootObject() {
         return root;
     }
 }
