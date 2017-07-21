@@ -17,8 +17,8 @@ public class Camera extends GameComponent
     public Matrix4f getViewProjection()
     {
         Matrix4f cameraRotation = getTransform().getTransformedRotation().conjugate().toRotationMatrix();
-        Vector3f cameraPos = getTransform().getTransformedPosition().mul(-1);
-
+        Vector3f cameraPos = getTransform().getTransformedPosition().negate();
+ 
         Matrix4f cameraTranslation = new Matrix4f().initTranslation(cameraPos.getX(), cameraPos.getY(), cameraPos.getZ());
 
         return projection.mul(cameraRotation.mul(cameraTranslation));
@@ -36,17 +36,16 @@ public class Camera extends GameComponent
     @Override
     public void input(float delta)
     {
-        float sensitivity = 0.5f;
+        float sensitivity = 0.8f;
         float movAmt = (float)(10 * delta);
 //		float rotAmt = (float)(100 * Time.getDelta());
 
-        if(Input.getKey(Input.KEY_ESCAPE))
-        {
+        if(Input.getKey(Input.KEY_ESCAPE)) {
             Input.setCursor(true);
             mouseLocked = false;
         }
-        if(Input.getMouseDown(0))
-        {
+        
+        if(Input.getMouseDown(0)) {
             Input.setMousePosition(centerPosition);
             Input.setCursor(false);
             mouseLocked = true;
@@ -69,9 +68,10 @@ public class Camera extends GameComponent
             boolean rotX = deltaPos.getY() != 0;
 
             if(rotY)
-                getTransform().setRotation(new Quaternion(yAxis, (float) Math.toRadians(deltaPos.getX() * sensitivity)).mul(getTransform().getRotation()).normalized());
+                getTransform().rotate(yAxis, (float) Math.toRadians(deltaPos.getX() * sensitivity));
+            
             if(rotX)
-                getTransform().setRotation(new Quaternion(getTransform().getTransformedRotation().getRight(), (float) Math.toRadians(-deltaPos.getY() * sensitivity)).mul(getTransform().getRotation()).normalized());
+                getTransform().rotate(getTransform().getRotation().getRight(), (float) Math.toRadians(-deltaPos.getY() * sensitivity));
 
             if(rotY || rotX)
                 Input.setMousePosition(new Vector2f(Window.getWidth()/2, Window.getHeight()/2));

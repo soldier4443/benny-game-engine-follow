@@ -41,10 +41,11 @@ public class TestGame extends Game {
         planeObject.getTransform().getPosition().set(0, -1, 5);
 
 
-        DirectionalLight directionalLight = new DirectionalLight(new Vector3f(1, 0, 1), 0.2f);
+        DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, 1), 0.4f);
         GameObject directionalLightObject = new GameObject();
         directionalLightObject.addComponent(directionalLight);
-
+        
+        directionalLight.getTransform().setRotation(new Quaternion(new Vector3f(1, 0, 0), (float)Math.toRadians(-45)));
         
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -69,10 +70,6 @@ public class TestGame extends Game {
         spotLightObject.getTransform().getPosition().set(5, 0, 5);
         spotLightObject.getTransform().setRotation(new Quaternion(new Vector3f(0, 1, 0), (float) Math.toRadians(90.0f)));
         
-        getRootObject().addChild(planeObject);
-        getRootObject().addChild(directionalLightObject);
-        getRootObject().addChild(spotLightObject);
-        
         Camera camera = new Camera((float) Math.toRadians(70), (float) (Window.getWidth() / Window.getHeight()), 0.1f, 1000f);
         cameraObject = new GameObject().addComponent(camera);
 
@@ -86,12 +83,16 @@ public class TestGame extends Game {
         plane2.getTransform().setPosition(new Vector3f(0, 0, 5));
 
         plane1.addChild(plane2);
-        plane1.addChild(cameraObject);
+        plane2.addChild(cameraObject);
 //        getRootObject().addChild(cameraObject);
-
+        
+        plane1.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(45)));
+        cameraObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(45)));
+    
+        getRootObject().addChild(planeObject);
+        getRootObject().addChild(directionalLightObject);
+        getRootObject().addChild(spotLightObject);
         getRootObject().addChild(plane1);
-
-        directionalLight.getTransform().setRotation(new Quaternion(new Vector3f(1, 0, 0), (float)Math.toRadians(45)));
     }
 
     float time = 0;

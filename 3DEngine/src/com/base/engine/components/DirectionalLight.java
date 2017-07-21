@@ -12,6 +12,6 @@ public class DirectionalLight extends BaseLight {
     }
 
     public Vector3f getDirection() {
-        return getTransform().getRotation().getForward();
+        return getTransform().getTransformedRotation().getForward();
     }
 }

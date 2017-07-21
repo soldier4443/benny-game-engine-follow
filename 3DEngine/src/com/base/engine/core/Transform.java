@@ -18,6 +18,11 @@ public class Transform {
 
         setChanged(true);
     }
+    
+    public void rotate(Vector3f axis, float angle) {
+        // The order of multiplication is really important..
+        rotation = new Quaternion(axis, angle).mul(rotation).normalized();
+    }
 
     public Matrix4f getTransformation() {
         if (isChanged()) {
@@ -45,16 +50,18 @@ public class Transform {
     }
 
     public Vector3f getTransformedPosition() {
-        return getTransformation().getTransformedPosition(position);
+        if (parent != null)
+            return parent.getTransformation().getTransformedPosition(position);
+        else
+            return position;
     }
 
     public Quaternion getTransformedRotation() {
-        Quaternion parentRotation = new Quaternion(0, 0, 0, 1);
-
         if (parent != null)
-            parentRotation = parent.getTransformedRotation();
-
-        return rotation.mul(parentRotation);
+            return parent.getTransformedRotation().mul(rotation);
+//            return rotation.mul( parent.getTransformedRotation() );
+        else
+            return rotation;
     }
 
     public void setParent(Transform parent) {
