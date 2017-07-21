@@ -11,15 +11,16 @@ public class TestGame extends Game {
     GameObject cameraObject;
     GameObject monkeyObject;
     GameObject boxObject;
+    GameObject planeObject;
 
     public void init() {
         float fieldDepth = 10.0f;
         float fieldWidth = 10.0f;
 
-        Vertex[] planeVertices = new Vertex[]{new Vertex(new Vector3f(-fieldWidth, 0.0f, -fieldDepth), new Vector2f(0.0f, 0.0f)),
-                new Vertex(new Vector3f(-fieldWidth, 0.0f, fieldDepth * 3), new Vector2f(0.0f, 1.0f)),
-                new Vertex(new Vector3f(fieldWidth * 3, 0.0f, -fieldDepth), new Vector2f(1.0f, 0.0f)),
-                new Vertex(new Vector3f(fieldWidth * 3, 0.0f, fieldDepth * 3), new Vector2f(1.0f, 1.0f))};
+        Vertex[] planeVertices = new Vertex[]{new Vertex(new Vector3f(-fieldWidth * 2, 0.0f, -fieldDepth * 2), new Vector2f(0.0f, 0.0f)),
+                new Vertex(new Vector3f(-fieldWidth * 2, 0.0f, fieldDepth * 2), new Vector2f(0.0f, 1.0f)),
+                new Vertex(new Vector3f(fieldWidth * 2, 0.0f, -fieldDepth * 2), new Vector2f(1.0f, 0.0f)),
+                new Vertex(new Vector3f(fieldWidth * 2, 0.0f, fieldDepth * 2), new Vector2f(1.0f, 1.0f))};
 
         int planeIndices[] = {0, 1, 2,
                 2, 1, 3};
@@ -47,14 +48,28 @@ public class TestGame extends Game {
         material2.addTexture("diffuse", new Texture("bricks_disp.png"));
         material2.addFloat("specularIntensity", 1.0f);
         material2.addFloat("specularPower", 8.0f);
-        
-        
-        GameObject planeObject = new GameObject();
-        planeObject.addComponent(new MeshRenderer(mesh, material));
-        planeObject.getTransform().setPosition(new Vector3f(0, -1, 5));
 
 
-        DirectionalLight directionalLight = new DirectionalLight(new Vector3f(1, 1, 1), 1f);
+        planeObject = new GameObject();
+        int width = 6;
+        int depth = 6;
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < depth; j++) {
+                float size = fieldWidth * 4;
+
+                GameObject planePiece = new GameObject();
+                planePiece.addComponent(new MeshRenderer(mesh, material2));
+                planePiece.getTransform().setPosition(new Vector3f(-size * (width - 1) * 0.5f + size * i, -1, -size * (depth - 1) * 0.5f + size * j));
+
+                planeObject.addChild(planePiece);
+            }
+        }
+
+        addObject(planeObject);
+
+
+        DirectionalLight directionalLight = new DirectionalLight(new Vector3f(1, 1, 1), 0.1f);
         GameObject directionalLightObject = new GameObject();
         directionalLightObject.addComponent(directionalLight);
         
@@ -101,7 +116,6 @@ public class TestGame extends Game {
         plane1.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(45)));
         cameraObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(45)));
     
-        addObject(planeObject);
         addObject(directionalLightObject);
         addObject(spotLightObject);
         addObject(plane1);

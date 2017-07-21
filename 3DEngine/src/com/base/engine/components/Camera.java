@@ -36,8 +36,8 @@ public class Camera extends GameComponent
     @Override
     public void input(float delta)
     {
-        float sensitivity = 0.8f;
-        float movAmt = (float)(10 * delta);
+        float sensitivity = 0.5f;
+        float movAmt = (float)(30 * delta);
 //		float rotAmt = (float)(100 * Time.getDelta());
 
         if(Input.getKey(Input.KEY_ESCAPE)) {
