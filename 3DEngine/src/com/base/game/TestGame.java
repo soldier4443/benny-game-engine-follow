@@ -9,6 +9,7 @@ public class TestGame extends Game {
     GameObject plane1;
     GameObject plane2;
     GameObject cameraObject;
+    GameObject monkeyObject;
 
     public void init() {
         float fieldDepth = 10.0f;
@@ -87,7 +88,6 @@ public class TestGame extends Game {
         plane2.getTransform().setPosition(new Vector3f(0, 0, 5));
 
         plane1.addChild(plane2);
-        plane2.addChild(cameraObject);
 //        addObject(cameraObject);
         
         plane1.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(45)));
@@ -97,8 +97,14 @@ public class TestGame extends Game {
         addObject(directionalLightObject);
         addObject(spotLightObject);
         addObject(plane1);
+        addObject(cameraObject);
+        
+        monkeyObject = new GameObject().addComponent(new MeshRenderer(monkey, material));
+        monkeyObject.getTransform().setPosition(new Vector3f(5, 5, 5));
+        
+        addObject(monkeyObject);
     }
-
+    
     float time = 0;
 
     @Override
@@ -107,6 +113,7 @@ public class TestGame extends Game {
 
         time += deltaTime;
 
-//        plane1.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
+        plane1.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
+        monkeyObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
     }
 }

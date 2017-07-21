@@ -7,6 +7,7 @@ import com.base.engine.core.Vector3f;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by nyh0111 on 2017-07-21.
@@ -68,6 +69,56 @@ public class OBJModel {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+    
+    public IndexedModel toIndexedModel() {
+        IndexedModel result = new IndexedModel();
+        HashMap<Integer, Integer> indexMap = new HashMap<Integer, Integer>();
+        
+        int currentVertexIndex = 0;
+        for (int i = 0; i < indices.size(); i++) {
+            OBJIndex currentIndex = indices.get(i);
+            
+            Vector3f currentPosition = positions.get(currentIndex.positionIndex);
+            Vector2f currentTexCoord;
+            Vector3f currentNormal;
+            
+            if (hasTexCoords)
+                currentTexCoord = texturePositions.get(currentIndex.texturePositionIndex);
+            else
+                currentTexCoord = new Vector2f(0, 0);
+            
+            if (hasNormals)
+                currentNormal = normals.get(currentIndex.normalIndex);
+            else
+                currentNormal = new Vector3f(0, 0, 0);
+            
+            int previousVertexIndex = -1;
+            
+            for (int j = 0; j < i; j++) {
+                OBJIndex oldIndex = indices.get(j);
+                
+                if (currentIndex.positionIndex == oldIndex.positionIndex
+                    && currentIndex.texturePositionIndex == oldIndex.texturePositionIndex
+                    && currentIndex.normalIndex == oldIndex.normalIndex) {
+                    previousVertexIndex = j;
+                    break;
+                }
+            }
+            
+            if (previousVertexIndex == -1) {
+                indexMap.put(i, currentVertexIndex);
+                
+                result.getPositions().add(currentPosition);
+                result.getTexturePositions().add(currentTexCoord);
+                result.getNormals().add(currentNormal);
+                result.getIndices().add(currentVertexIndex);
+                currentVertexIndex++;
+            } else
+                result.getIndices().add(indexMap.get(previousVertexIndex));
+        }
+        
+        return result;
     }
     
     private OBJIndex parseOBJIndex(String token) {
