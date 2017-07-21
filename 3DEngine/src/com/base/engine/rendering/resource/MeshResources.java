@@ -15,6 +15,7 @@ public class MeshResources {
         vbo = glGenBuffers();
         ibo = glGenBuffers();
         this.size = size;
+        this.referenceCount = 1;
     }
 
     @Override

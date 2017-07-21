@@ -1,15 +1,22 @@
 package com.base.engine.core;
 
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 
 import com.base.engine.rendering.Vertex;
 
+import com.sun.prism.impl.BufferUtil;
 import org.lwjgl.BufferUtils;
 
 public class Util {
     // This method do nothing now, but later we can easily change source with this method!
+    public static ByteBuffer createByteBuffer(int size) {
+        return BufferUtils.createByteBuffer(size);
+    }
+
+
     public static FloatBuffer createFloatBuffer(int size) {
         return BufferUtils.createFloatBuffer(size);
     }
