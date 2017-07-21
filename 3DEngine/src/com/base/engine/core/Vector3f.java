@@ -161,4 +161,10 @@ public class Vector3f {
     public void setZ(float z) {
         this.z = z;
     }
+    
+    public void set(Vector3f r) {
+        this.x = r.x;
+        this.y = r.y;
+        this.z = r.z;
+    }
 }

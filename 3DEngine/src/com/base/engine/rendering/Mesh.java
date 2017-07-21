@@ -2,6 +2,7 @@ package com.base.engine.rendering;
 
 import com.base.engine.core.Util;
 import com.base.engine.core.Vector3f;
+import com.base.engine.rendering.mesh.OBJModel;
 
 import org.lwjgl.opengl.GL15;
 
@@ -68,6 +69,7 @@ public class Mesh {
         glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE * 4, 20); // offset : 4 * 3
 
 //		glDrawArrays(GL_TRIANGLES, 0, size);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo); // What a critical fault!! I totally miss binding it..
         glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
         
         glDisableVertexAttribArray(0);
@@ -104,6 +106,8 @@ public class Mesh {
             new Exception().printStackTrace();
             System.exit(1);
         }
+    
+        OBJModel test = new OBJModel("res/models/" + fileName);
         
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Integer> indices = new ArrayList<>();
@@ -149,7 +153,7 @@ public class Mesh {
             Integer[] indexData = new Integer[indices.size()];
             indices.toArray(indexData);
             
-            addVertices(vertexData, Util.toIntArray(indexData));
+            addVertices(vertexData, Util.toIntArray(indexData), true);
             
         } catch (Exception e) {
             e.printStackTrace();

@@ -32,6 +32,7 @@ public class TestGame extends Game {
         
         Mesh mesh = new Mesh(planeVertices, planeIndices, true);
         Mesh mesh2 = new Mesh(planeVertices2, planeIndices2, true);
+        Mesh monkey = new Mesh("monkey3.obj");
         
         Material material = new Material();//new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
         material.addTexture("diffuse", new Texture("test.png"));
