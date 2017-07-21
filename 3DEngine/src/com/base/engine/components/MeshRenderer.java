@@ -8,7 +8,7 @@ import com.base.engine.rendering.Shader;
 public class MeshRenderer extends GameComponent {
     private Mesh mesh;
     private Material material;
-    
+
     public MeshRenderer(Mesh mesh, Material material) {
         this.mesh = mesh;
         this.material = material;

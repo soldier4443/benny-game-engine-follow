@@ -10,6 +10,7 @@ public class TestGame extends Game {
     GameObject plane2;
     GameObject cameraObject;
     GameObject monkeyObject;
+    GameObject boxObject;
 
     public void init() {
         float fieldDepth = 10.0f;
@@ -33,12 +34,19 @@ public class TestGame extends Game {
         
         Mesh mesh = new Mesh(planeVertices, planeIndices, true);
         Mesh mesh2 = new Mesh(planeVertices2, planeIndices2, true);
-        Mesh monkey = new Mesh("box.obj");
-        
+        Mesh monkey = new Mesh("monkey3.obj");
+
+        Mesh box = new Mesh("box.obj");
+
         Material material = new Material();//new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
         material.addTexture("diffuse", new Texture("test.png"));
         material.addFloat("specularIntensity", 1.0f);
         material.addFloat("specularPower", 8.0f);
+
+        Material material2 = new Material();//new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
+        material2.addTexture("diffuse", new Texture("bricks_disp.png"));
+        material2.addFloat("specularIntensity", 1.0f);
+        material2.addFloat("specularPower", 8.0f);
         
         
         GameObject planeObject = new GameObject();
@@ -46,7 +54,7 @@ public class TestGame extends Game {
         planeObject.getTransform().setPosition(new Vector3f(0, -1, 5));
 
 
-        DirectionalLight directionalLight = new DirectionalLight(new Vector3f(0, 0, 1), 0.4f);
+        DirectionalLight directionalLight = new DirectionalLight(new Vector3f(1, 1, 1), 1f);
         GameObject directionalLightObject = new GameObject();
         directionalLightObject.addComponent(directionalLight);
         
@@ -99,11 +107,28 @@ public class TestGame extends Game {
         addObject(plane1);
         addObject(cameraObject);
         
-        monkeyObject = new GameObject().addComponent(new MeshRenderer(monkey, material));
+        monkeyObject = new GameObject().addComponent(new MeshRenderer(monkey, material2));
         monkeyObject.getTransform().setPosition(new Vector3f(5, 5, 5));
         monkeyObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(-70.0f)));
         
         addObject(monkeyObject);
+
+        boxObject = new GameObject().addComponent(new MeshRenderer(box, material));
+        boxObject.getTransform().setPosition(new Vector3f(3, 3, 7));
+
+        addObject(boxObject);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                for (int k = 0; k < 5; k++) {
+                    GameObject object = new GameObject().addComponent(new MeshRenderer(new Mesh("box.obj"), material));
+
+                    object.getTransform().setPosition(new Vector3f(10 + k * 5, i * 5, 10 + j * 5));
+
+                    addObject(object);
+                }
+            }
+        }
     }
     
     float time = 0;
@@ -116,5 +141,6 @@ public class TestGame extends Game {
 
         plane1.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
         monkeyObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
+        boxObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
     }
 }
