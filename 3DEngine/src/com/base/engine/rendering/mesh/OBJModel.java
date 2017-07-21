@@ -72,10 +72,12 @@ public class OBJModel {
     }
     
     public IndexedModel toIndexedModel() {
-        IndexedModel result = new IndexedModel();
-        HashMap<Integer, Integer> indexMap = new HashMap<Integer, Integer>();
-        
-        int currentVertexIndex = 0;
+        IndexedModel model = new IndexedModel();
+        IndexedModel normalModel = new IndexedModel();
+        HashMap<OBJIndex, Integer> modelIndexMap = new HashMap<>();
+        HashMap<Integer, Integer> normalIndexMap = new HashMap<>();
+        HashMap<Integer, Integer> indexMap = new HashMap<>();
+
         for (int i = 0; i < indices.size(); i++) {
             OBJIndex currentIndex = indices.get(i);
             
@@ -92,33 +94,47 @@ public class OBJModel {
                 currentNormal = normals.get(currentIndex.normalIndex);
             else
                 currentNormal = new Vector3f(0, 0, 0);
-            
-            int previousVertexIndex = -1;
-            
-            for (int j = 0; j < i; j++) {
-                OBJIndex oldIndex = indices.get(j);
-                
-                if (currentIndex.positionIndex == oldIndex.positionIndex
-                    && currentIndex.texturePositionIndex == oldIndex.texturePositionIndex
-                    && currentIndex.normalIndex == oldIndex.normalIndex) {
-                    previousVertexIndex = j;
-                    break;
-                }
+
+            Integer modelIndex = modelIndexMap.get(currentIndex);
+
+            if (modelIndex == null) {
+                // result.getPosition().size() == <last index + 1>
+                modelIndexMap.put(currentIndex, model.getPositions().size());
+                modelIndex = model.getPositions().size();
+
+                model.getPositions().add(currentPosition);
+                model.getTexturePositions().add(currentTexCoord);
+                if (hasNormals)
+                    model.getNormals().add(currentNormal);
             }
-            
-            if (previousVertexIndex == -1) {
-                indexMap.put(i, currentVertexIndex);
-                
-                result.getPositions().add(currentPosition);
-                result.getTexturePositions().add(currentTexCoord);
-                result.getNormals().add(currentNormal);
-                result.getIndices().add(currentVertexIndex);
-                currentVertexIndex++;
-            } else
-                result.getIndices().add(indexMap.get(previousVertexIndex));
+
+            Integer normalModelIndex = normalIndexMap.get(currentIndex.positionIndex);
+
+            if (normalModelIndex == null) {
+                // result.getPosition().size() == <last index + 1>
+                normalIndexMap.put(currentIndex.positionIndex, normalModel.getPositions().size());
+                normalModelIndex = normalModel.getPositions().size();
+
+                normalModel.getPositions().add(currentPosition);
+                normalModel.getTexturePositions().add(currentTexCoord);
+                normalModel.getNormals().add(currentNormal);
+            }
+
+            model.getIndices().add(modelIndex);
+            normalModel.getIndices().add(normalModelIndex);
+
+            indexMap.put(modelIndex, normalModelIndex);
         }
-        
-        return result;
+
+        if (!hasNormals) {
+            normalModel.calculateNormals();
+
+            for (int i = 0; i < model.getPositions().size(); i++) {
+                model.getNormals().add(normalModel.getNormals().get(indexMap.get(i)));
+            }
+        }
+
+        return model;
     }
     
     private OBJIndex parseOBJIndex(String token) {

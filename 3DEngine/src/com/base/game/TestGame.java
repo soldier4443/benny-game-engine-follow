@@ -33,7 +33,7 @@ public class TestGame extends Game {
         
         Mesh mesh = new Mesh(planeVertices, planeIndices, true);
         Mesh mesh2 = new Mesh(planeVertices2, planeIndices2, true);
-        Mesh monkey = new Mesh("monkey3.obj");
+        Mesh monkey = new Mesh("box.obj");
         
         Material material = new Material();//new Texture("test.png"), new Vector3f(1, 1, 1), 1, 8);
         material.addTexture("diffuse", new Texture("test.png"));
@@ -101,6 +101,7 @@ public class TestGame extends Game {
         
         monkeyObject = new GameObject().addComponent(new MeshRenderer(monkey, material));
         monkeyObject.getTransform().setPosition(new Vector3f(5, 5, 5));
+        monkeyObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(-70.0f)));
         
         addObject(monkeyObject);
     }
