@@ -80,7 +80,7 @@ public class TestGame extends Game {
                 GameObject pointLightObject = new GameObject();
                 pointLightObject.addComponent(new PointLight(
                     new Vector3f(0, 1, 0), 0.2f,
-                    new Vector3f(0, 0, 1)
+                    new Attenuation(0, 0, 1)
                 ));
                 
                 pointLightObject.getTransform().setPosition(new Vector3f(i * 5, 0, j * 5));
@@ -93,7 +93,7 @@ public class TestGame extends Game {
         GameObject spotLightObject = new GameObject();
         spotLightObject.addComponent(new SpotLight(
             new Vector3f(0, 1, 1), 0.8f,
-            new Vector3f(0, 0, 0.08f), 0.7f));
+            new Attenuation(0, 0, 0.08f), 0.7f));
         
         spotLightObject.getTransform().setPosition(new Vector3f(5, 0, 5));
         spotLightObject.getTransform().setRotation(new Quaternion(new Vector3f(0, 1, 0), (float) Math.toRadians(90.0f)));

@@ -25,9 +25,9 @@ public class Camera extends GameComponent
     }
 
     @Override
-    public void addToRenderingEngine(RenderingEngine renderingEngine)
+    public void addToEngine(CoreEngine engine)
     {
-        renderingEngine.setMainCamera(this);
+        engine.getRenderingEngine().setMainCamera(this);
     }
 
     boolean mouseLocked = false;

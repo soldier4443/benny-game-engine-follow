@@ -21,6 +21,8 @@ public class CoreEngine {
     public void createWindow(String title) {
         Window.createWindow(width, height, title);
         this.renderingEngine = new RenderingEngine();
+
+        game.setEngine(this);
     }
     
     public void start() {
@@ -97,5 +99,9 @@ public class CoreEngine {
     
     private void cleanup() {
         Window.dispose();
+    }
+
+    public RenderingEngine getRenderingEngine() {
+        return renderingEngine;
     }
 }

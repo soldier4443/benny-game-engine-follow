@@ -49,11 +49,7 @@ public class RenderingEngine extends MappedValues {
     
     public void render(GameObject object) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        lights.clear();
-        object.addToRenderingEngine(this);
-        
-//        ForwardAmbientShader.getInstance().setRenderingEngine(this);
+
         object.render(forawrdAmbient, this);
         
         glEnable(GL_BLEND);
@@ -62,8 +58,6 @@ public class RenderingEngine extends MappedValues {
         glDepthFunc(GL_EQUAL);   // Write the pixels if it has exact same depth value as the pixel we found to be near to the screen
         
         for (BaseLight light : lights) {
-//            light.getShader().setRenderingEngine(this);
-            
             activeLight = light;
             
             object.render(light.getShader(), this);

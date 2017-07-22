@@ -28,4 +28,8 @@ public abstract class Game {
     private GameObject getRootObject() {
         return root;
     }
+
+    public void setEngine(CoreEngine engine) {
+        root.setEngine(engine);
+    }
 }
