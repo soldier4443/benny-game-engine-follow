@@ -99,7 +99,7 @@ public class Shader {
                 } else {
                     throw new IllegalArgumentException(component.type + " is not a valid component in RenderingEngine");
                 }
-            } else if (component.type.equals("C_")) {
+            } else if (component.name.startsWith("C_")) {
                 if (component.name.equals("C_eyePos")) {
                     setUniform(component.name, renderingEngine.getMainCamera().getTransform().getTransformedPosition());
                 } else {
@@ -306,9 +306,9 @@ public class Shader {
 
     private void setUniformPointLight(String uniformName, PointLight pointLight) {
         setUniformBaseLight(uniformName + ".base", pointLight);
-        setUniformf(uniformName + ".attenuation.constant", pointLight.getConstant());
-        setUniformf(uniformName + ".attenuation.linear", pointLight.getLinear());
-        setUniformf(uniformName + ".attenuation.exponent", pointLight.getExponent());
+        setUniformf(uniformName + ".attenuation.constant", pointLight.getAttenuation().getConstant());
+        setUniformf(uniformName + ".attenuation.linear", pointLight.getAttenuation().getLinear());
+        setUniformf(uniformName + ".attenuation.exponent", pointLight.getAttenuation().getExponent());
         setUniform(uniformName + ".position", pointLight.getTransform().getPosition());
         setUniformf(uniformName + ".range", pointLight.getRange());
     }
