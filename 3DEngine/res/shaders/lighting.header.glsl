@@ -1,4 +1,4 @@
-uniform vec3 eyePos;
+uniform vec3 C_eyePos;
 uniform float specularIntensity;
 uniform float specularPower;
 
@@ -8,7 +8,7 @@ struct BaseLight
   float intensity;
 };
 
-struct Attenuation  // How quickly point lights disappear (fading out..)
+struct Attenuation
 {
   float constant;
   float linear;
@@ -47,7 +47,7 @@ vec4 calculateLight(BaseLight base, vec3 direction, vec3 normal, vec3 worldPos)
   {
     diffuseColor = vec4(base.color, 1.0) * base.intensity * diffuseFactor;
 
-    vec3 directionToEye = normalize(eyePos - worldPos);
+    vec3 directionToEye = normalize(C_eyePos - worldPos);
     // vec3 reflectDirection = normalize(reflect(direction, normal));
     vec3 halfDirection = normalize(directionToEye - direction);
 

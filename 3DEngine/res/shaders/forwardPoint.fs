@@ -8,9 +8,9 @@ in vec3 worldPos0;
 out vec4 fragColor;
 
 uniform sampler2D diffuse;
-uniform PointLight pointLight;
+uniform PointLight R_pointLight;
 
 void main()
 {
-  fragColor = texture(diffuse, texturePos0.xy) * calculatePointLight(pointLight, normalize(normal0), worldPos0);
+  fragColor = texture(diffuse, texturePos0.xy) * calculatePointLight(R_pointLight, normalize(normal0), worldPos0);
 }

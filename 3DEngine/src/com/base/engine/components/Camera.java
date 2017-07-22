@@ -77,6 +77,8 @@ public class Camera extends GameComponent
                 Input.setMousePosition(new Vector2f(Window.getWidth()/2, Window.getHeight()/2));
         }
 
+        System.out.println(getTransform().getTransformedPosition());
+
 //		if(Input.getKey(Input.KEY_UP))
 //			rotateX(-rotAmt);
 //		if(Input.getKey(Input.KEY_DOWN))
