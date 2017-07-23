@@ -4,7 +4,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 /**
- * Nice input system!
+ * Nice inputAll system!
  *
  * @author soldi
  */

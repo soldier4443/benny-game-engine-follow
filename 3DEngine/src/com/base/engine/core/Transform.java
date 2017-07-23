@@ -24,6 +24,14 @@ public class Transform {
         rotation = new Quaternion(axis, angle).mul(rotation).normalized();
     }
 
+    public void lookAt(Vector3f point, Vector3f up) {
+        rotation = getLookAtDirection(point, up);
+    }
+
+    public Quaternion getLookAtDirection(Vector3f point, Vector3f up) {
+        return new Quaternion(new Matrix4f().initRotation(point.sub(position).normalized(), up));
+    }
+
     public Matrix4f getTransformation() {
         if (isChanged()) {
             Matrix4f translationMatrix = new Matrix4f().initTranslation(

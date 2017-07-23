@@ -94,12 +94,12 @@ public class TestGame extends Game {
         spotLightObject.addComponent(new SpotLight(
             new Vector3f(0, 1, 1), 0.8f,
             new Attenuation(0, 0, 0.08f), 0.7f));
-        
+
         spotLightObject.getTransform().setPosition(new Vector3f(5, 0, 5));
         spotLightObject.getTransform().setRotation(new Quaternion(new Vector3f(0, 1, 0), (float) Math.toRadians(90.0f)));
         
         Camera camera = new Camera((float) Math.toRadians(70), (float) (Window.getWidth() / Window.getHeight()), 0.1f, 1000f);
-        cameraObject = new GameObject().addComponent(camera);
+        cameraObject = new GameObject().addComponent(camera).addComponent(new FreeLook(0.5f)).addComponent(new FreeMove(30));
 
 //        cameraObject.getTransform().setRotation(new Quaternion(Vector3f.X, (float)Math.toRadians(90)));
 //        cameraObject.getTransform().setPosition(new Vector3f(5, 10, 5));
@@ -121,7 +121,7 @@ public class TestGame extends Game {
         addObject(plane1);
         addObject(cameraObject);
         
-        monkeyObject = new GameObject().addComponent(new MeshRenderer(monkey, material2));
+        monkeyObject = new GameObject().addComponent(new MeshRenderer(monkey, material2)).addComponent(new LookAtComponent());
         monkeyObject.getTransform().setPosition(new Vector3f(5, 5, 5));
         monkeyObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(-70.0f)));
         
@@ -153,8 +153,8 @@ public class TestGame extends Game {
 
         time += deltaTime;
 
-        plane1.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
-        monkeyObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
-        boxObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
+//        plane1.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
+//        monkeyObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
+//        boxObject.getTransform().setRotation(new Quaternion(Vector3f.Y, (float)Math.toRadians(time * 30)));
     }
 }

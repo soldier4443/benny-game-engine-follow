@@ -10,11 +10,11 @@ public abstract class Game {
     }
     
     public void input(float deltaTime) {
-        getRootObject().input(deltaTime);
+        getRootObject().inputAll(deltaTime);
     }
     
     public void update(float deltaTime) {
-        getRootObject().update(deltaTime);
+        getRootObject().updateAll(deltaTime);
     }
     
     public void render(RenderingEngine renderingEngine) {

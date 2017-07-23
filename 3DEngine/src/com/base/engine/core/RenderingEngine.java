@@ -2,8 +2,6 @@ package com.base.engine.core;
 
 import com.base.engine.components.BaseLight;
 import com.base.engine.components.Camera;
-import com.base.engine.components.DirectionalLight;
-import com.base.engine.components.PointLight;
 import com.base.engine.rendering.*;
 import com.base.engine.rendering.resource.MappedValues;
 
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.GL_VERSION;
 import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 
 public class RenderingEngine extends MappedValues {
@@ -50,7 +47,7 @@ public class RenderingEngine extends MappedValues {
     public void render(GameObject object) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        object.render(forawrdAmbient, this);
+        object.renderAll(forawrdAmbient, this);
         
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE); // Add
@@ -60,7 +57,7 @@ public class RenderingEngine extends MappedValues {
         for (BaseLight light : lights) {
             activeLight = light;
             
-            object.render(light.getShader(), this);
+            object.renderAll(light.getShader(), this);
         }
         
         glDepthFunc(GL_LESS);

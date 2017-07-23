@@ -33,28 +33,40 @@ public class GameObject {
         return this;
     }
     
+    public void inputAll(float deltaTime) {
+        input(deltaTime);
+
+        for (GameObject child : children)
+            child.inputAll(deltaTime);
+    }
+    
+    public void updateAll(float deltaTime) {
+        update(deltaTime);
+        
+        for (GameObject child : children)
+            child.updateAll(deltaTime);
+    }
+    
+    public void renderAll(Shader shader, RenderingEngine renderingEngine) {
+        render(shader, renderingEngine);
+
+        for (GameObject child : children)
+            child.renderAll(shader, renderingEngine);
+    }
+
     public void input(float deltaTime) {
         for (GameComponent component : components)
             component.input(deltaTime);
-        
-        for (GameObject child : children)
-            child.input(deltaTime);
     }
-    
+
     public void update(float deltaTime) {
         for (GameComponent component : components)
             component.update(deltaTime);
-        
-        for (GameObject child : children)
-            child.update(deltaTime);
     }
-    
+
     public void render(Shader shader, RenderingEngine renderingEngine) {
         for (GameComponent component : components)
             component.render(shader, renderingEngine);
-        
-        for (GameObject child : children)
-            child.render(shader, renderingEngine);
     }
 
     public void setEngine(CoreEngine engine) {

@@ -23,7 +23,7 @@ public class Window {
     }
     
     public static void render() {
-        // update everything in the display
+        // updateAll everything in the display
         Display.update();
     }
     
